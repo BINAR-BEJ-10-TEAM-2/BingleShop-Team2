@@ -1,0 +1,36 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "BingleShop RESTful API",
+    "description": "",
+    "version": ""
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000/api/"
+    }
+  ],
+  "paths": {
+    "/users/register": {
+      "post": {
+        "tags": ["Register"],
+        "summary": "Register a new User",
+        "description": "Register a new User"
+      }
+    },
+    "/users/login": {
+      "post": {
+        "tags": ["Login"],
+        "summary": "User Login",
+        "description": "Login for existing users"
+      }
+    },
+    "/users/:userId/my-profile": {
+      "get": {
+        "tags": ["User"],
+        "summary": "User Profile",
+        "description": "Get current data user Profile"
+      }
+    }
+  }
+}
