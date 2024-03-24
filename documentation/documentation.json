@@ -7,29 +7,174 @@
   },
   "servers": [
     {
-      "url": "http://localhost:3000/api/"
+      "url": "http://localhost:3002/api/"
     }
   ],
   "paths": {
-    "/users/register": {
+    "/v2/register": {
       "post": {
-        "tags": ["Register"],
+        "tags": [
+          "Register"
+        ],
         "summary": "Register a new User",
-        "description": "Register a new User"
+        "description": "Register a new User",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Users"
+              },
+              "examples": {
+                "javascipt": {
+                  "description": "Register user",
+                  "value": {
+                    "nickname": "ixwn",
+                    "email": "ixwn@mail.com",
+                    "password": "password",
+                    "phone_number": "082222222222"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Users"
+                },
+                "examples": {
+                  "javascipt": {
+                    "description": "Success register user and encrypt password",
+                    "value": {
+                      "success": 1,
+                      "message": "USER_CREATED",
+                      "data": {
+                        "email": "Judah_Franecki@example.org",
+                        "password": "$2b$10$sUzftkrduo0pxpdKnWxMt.ofaFMys7BTQIY1uk8sjx6nyvKVv8SQC"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "422": {
+            "description": "Validation exception"
+          }
+        },
+        "security": [
+          {
+            "users_auth": [
+              "write:users",
+              "read:users"
+            ]
+          }
+        ]
       }
     },
-    "/users/login": {
+    "/v2/login": {
       "post": {
-        "tags": ["Login"],
-        "summary": "User Login",
-        "description": "Login for existing users"
+        "tags": [
+          "Login"
+        ],
+        "summary": "Login user",
+        "description": "Try to login user",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Users"
+              },
+              "examples": {
+                "javascipt": {
+                  "description": "Login user",
+                  "value": {
+                    "email": "Adelia_Jaskolski@example.net",
+                    "password": "password"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Users"
+                },
+                "examples": {
+                  "javascipt": {
+                    "description": "Success login user",
+                    "value": "LOGIN_SUCCESS"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "422": {
+            "description": "Validation exception"
+          }
+        },
+        "security": [
+          {
+            "users_auth": [
+              "write:users",
+              "read:users"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "BingleShopAuth": {
+        "description": "authentication for BingleShop RESTful API",
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-API-apiKey"
       }
     },
-    "/users/:userId/my-profile": {
-      "get": {
-        "tags": ["User"],
-        "summary": "User Profile",
-        "description": "Get current data user Profile"
+    "schemas": {
+      "Users": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "nickname": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "required": [
+              "true"
+            ]
+          },
+          "password": {
+            "type": "string",
+            "format": "bcrypt",
+            "required": [
+              "true"
+            ]
+          }
+        }
       }
     }
   }
