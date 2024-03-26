@@ -1,0 +1,7 @@
+components:
+  securitySchemes:
+    BingleShopAuth:
+      description: authentication for BingleShop RESTful API
+      type: apiKey
+      in: header
+      name: X-API-apiKey

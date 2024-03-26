@@ -1,1 +1,13 @@
-Hello World!
+---
+openapi: 3.0.3
+info:
+  title: BingleShop RESTful API
+  description: ''
+  version: ''
+servers:
+- url: http://localhost:3002/api/
+paths:
+  /v2/register:
+    $ref: './path/register.yaml'
+  /v2/login:
+    $ref: './path/login.yaml'
