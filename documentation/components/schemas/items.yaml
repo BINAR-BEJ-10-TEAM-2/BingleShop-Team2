@@ -1,0 +1,20 @@
+type: object
+title: items
+properties:
+  id:
+    type: integer
+  item_name:
+    type: string
+    required: true
+  stock:
+    type: integer
+    required: true
+  price:
+    type: integer
+    required: true
+  picture:
+    type: string
+    required: true
+  description:
+    type: string
+    required: true
