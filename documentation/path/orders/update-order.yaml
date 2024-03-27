@@ -1,0 +1,45 @@
+put:
+  tags:
+    - Orders
+  summary: Update Data Order
+  description: Update existing data order
+  parameters:
+    - in: path
+      name: orderId
+      required: true
+      schema:
+        type: integer
+        format: int64
+      description: ID of the order to update
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../components/schemas/orders.yaml'
+  responses:
+    '200':
+      description: Success update Order
+      content:
+        application/json:
+          schema:
+            $ref: '../../components/schemas/orders.yaml'
+    '400':
+      description: Client Error
+      content:
+        application/json:
+          schema:
+            properties:
+              success:
+                type: boolean
+                example: false
+              data:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Invalid request payload
+  security:
+    - BingleShopAuth:
+        - write:admin
+        - read:admin

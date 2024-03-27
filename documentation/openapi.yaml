@@ -5,9 +5,13 @@ info:
   description: ''
   version: ''
 servers:
-- url: http://localhost:3002/api/
+  - url: http://localhost:3002/api/
 paths:
   /v2/register:
     $ref: './path/register.yaml'
   /v2/login:
     $ref: './path/login.yaml'
+  /v2/orders:
+    $ref: './path/orders/create-order.yaml'
+  /v2/orders/{orderId}:
+    $ref: './path/orders/update-order.yaml'
