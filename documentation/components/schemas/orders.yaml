@@ -1,0 +1,13 @@
+type: object
+title: Orders
+properties:
+  id:
+    type: integer
+  address_to:
+    type: string
+    required: true
+  quantity:
+    type: integer
+    required: true
+  status:
+    type: enum("completed", "pending")
