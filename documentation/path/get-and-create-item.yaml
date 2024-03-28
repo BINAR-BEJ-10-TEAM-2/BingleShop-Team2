@@ -14,12 +14,12 @@
                 javascript::
                   description: Getting all items data
                   value:
-                  - item_id: '1'
+                  - id: '1'
                     item_name: NutriJon
                     stock: 30
                     price: 30000
                     description: Dessert
-                  - item_id: '2'
+                  - id: '2'
                     item_name: Mamak Melon
                     stock: 15
                     price: 20000
@@ -63,6 +63,7 @@
                     Success: 1
                     message: ITEM_CREATED
                     data:
+                      id: 3
                       item_name: Black Bean
                       stock: 20
                       price: 30000
