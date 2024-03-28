@@ -12,7 +12,7 @@ paths:
   /v2/login:
     $ref: './path/login.yaml'
   /v2/orders:
-    $ref: './path/orders/create-order.yaml'
+    $ref: './path/orders/create-get-order.yaml'
   /v2/orders/{orderId}:
     $ref: './path/orders/update-order.yaml'
   /v2/items/{itemId}:
