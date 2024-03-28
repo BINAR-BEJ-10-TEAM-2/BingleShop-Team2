@@ -5,9 +5,7 @@ info:
   description: OpenAPI for Getting and Adding Items Data
   version: ''
 servers:
-- url: http://localhost:3002/api/
+  - url: http://localhost:3002/api/
 paths:
   "/v2/items": 
      $ref: './path/get-and-create-item.yaml'
-     
-  
