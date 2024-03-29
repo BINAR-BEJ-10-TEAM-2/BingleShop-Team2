@@ -1,6 +1,6 @@
  get:
       tags:
-      - BingleShop Items Data
+      - Items
       summary: Get All Items Data
       description: Get all active items data by default
       responses:
@@ -32,7 +32,7 @@
           - read:users
  post:
       tags:
-      - BingleShop Items Data
+      - Items
       summary: Create a new item data
       description: Try to create new item data to database
       requestBody:
