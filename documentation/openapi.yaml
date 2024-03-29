@@ -17,3 +17,5 @@ paths:
     $ref: './path/orders/update-order.yaml'
   /v2/items/{itemId}:
     $ref: './path/items/update-delete-item.yaml'
+  /v2/items:
+    $ref: './path/items/get-and-create-item.yaml'
