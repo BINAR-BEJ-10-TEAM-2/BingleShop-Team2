@@ -1,6 +1,6 @@
     post:
       tags:
-      - Login
+      - Users
       summary: Login user
       description: Try to login user
       requestBody:
@@ -8,7 +8,7 @@
         content:
           application/json:
             schema:
-            $ref: "../components/schemas/users.yaml"
+            $ref: "../../components/schemas/users.yaml"
             examples:
               javascipt:
                 description: Login user
@@ -21,7 +21,7 @@
           content:
             application/json:
               schema:
-              $ref: "../components/schemas/users.yaml"
+              $ref: "../../components/schemas/users.yaml"
               examples:
                 javascipt:
                   description: Success login user

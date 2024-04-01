@@ -1,0 +1,45 @@
+put:
+  tags:
+    - Users
+  summary: Update user data
+  description: Update user data
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "../../components/schemas/users.yaml"
+        examples:
+          javascipt:
+            description: Update user data based on requested properties in body
+            value :
+              address: Tangerang
+              phone_number: "081122223333"
+
+  responses:
+    "200":
+      description: Update Success
+      content:
+        application/json:
+          schema:
+            $ref: "../../components/schemas/users.yaml"
+          examples:
+            javascipt:
+              description: Updated user data
+              value:
+                user_data:
+                  id : 0
+                  first_name: Farix
+                  last_name: Ikhwanul
+                  email : Judah_Franecki@example.org
+                  password: password
+                  adaddress: Tangerang
+                  phone_number: "081122223333"
+    "400":
+      description: Bad Request
+    "502":
+      description: Bad Gateway Error
+  security:
+    - BingleShopAuth:
+        - write:admin
+        - read:admin

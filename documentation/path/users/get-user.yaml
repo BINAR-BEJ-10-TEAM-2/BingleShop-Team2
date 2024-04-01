@@ -1,0 +1,32 @@
+get:
+  tags:
+    - Users
+  summary: Get user data
+  description: Get user data by token
+  responses:
+    "200" :
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: "../../components/schemas/users.yaml"
+          examples:
+            javascipt:
+              description: Show user data execpt isValidate and isActive status.
+              value:
+                user_data:
+                  id : 0
+                  first_name: Farix
+                  last_name: Ikhwanul
+                  email : Judah_Franecki@example.org
+                  password: password
+                  address: Jakarta
+                  phone_number: "082222222222"
+    "400":
+      description: Bad Request
+    "502":
+      description: Bad Gateway Error
+  security:
+    - BingleShopAuth:
+        - write:admin
+        - read:admin
