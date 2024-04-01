@@ -7,9 +7,9 @@ info:
 servers:
   - url: http://localhost:3002/api/
 paths:
-  /v2/register:
+  /api/users/register:
     $ref: './path/register.yaml'
-  /v2/login:
+  /api/users/login:
     $ref: './path/login.yaml'
   /v2/orders:
     $ref: './path/orders/create-get-order.yaml'
@@ -17,5 +17,5 @@ paths:
     $ref: './path/orders/update-order.yaml'
   /v2/items/{itemId}:
     $ref: './path/items/update-delete-item.yaml'
-  /v2/items:
+  /api/items:
     $ref: './path/items/get-and-create-item.yaml'
