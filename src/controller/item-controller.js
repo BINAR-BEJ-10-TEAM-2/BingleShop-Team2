@@ -33,9 +33,8 @@ const getItem = async (req, res, next) => {
       data: items,
     });
   } catch (error) {
-    next(error)
+    next(error);
   }
-
 };
 
 module.exports = { createItem, getItem };
