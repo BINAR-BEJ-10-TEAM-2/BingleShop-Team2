@@ -1,10 +1,12 @@
-const { User } = require('../models/');
 const bcrypt = require('bcrypt');
+const { User } = require('../models');
 const { ResponseError } = require('../error/response-error');
 
 const register = async (req, res, next) => {
   try {
-    const { nickname, email, password, phone_number } = req.body;
+    const {
+      nickname, email, password, phone_number,
+    } = req.body;
 
     const userExist = await User.findOne({
       where: {
@@ -44,19 +46,19 @@ const login = async (req, res, next) => {
     if (!userExist) {
       throw new ResponseError(
         401,
-        'INVALID_CREDENTIALS_EMAIL_OR_PASSWORD_NOT_VALID'
+        'INVALID_CREDENTIALS_EMAIL_OR_PASSWORD_NOT_VALID',
       );
     }
 
     const isValidPassword = bcrypt.compareSync(
       req.body.password,
-      userExist.password
+      userExist.password,
     );
 
     if (!isValidPassword) {
       throw new ResponseError(
         401,
-        'INVALID_CREDENTIALS_EMAIL_OR_PASSWORD_NOT_VALID'
+        'INVALID_CREDENTIALS_EMAIL_OR_PASSWORD_NOT_VALID',
       );
     }
 

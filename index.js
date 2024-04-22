@@ -5,7 +5,7 @@ const fs = require('fs');
 const morgan = require('morgan');
 const path = require('path');
 
-const routerIndex = require('./routes/index-router');
+const routerIndex = require('./src/routes/index-router');
 
 const app = express();
 const port = 3000;
@@ -15,7 +15,7 @@ app.use(express.urlencoded({ extended: false }));
 
 const accessLogStream = fs.createWriteStream(
   path.join(__dirname, 'access.log'),
-  { flags: 'a' }
+  { flags: 'a' },
 );
 
 // API ROUTERS
@@ -29,7 +29,7 @@ app.use(
     skip: function (req, res) {
       return res.statusCode < 400;
     },
-  })
+  }),
 );
 
 app.listen(port, () => {

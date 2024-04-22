@@ -1,7 +1,7 @@
 const routerIndex = require('express').Router();
-const userRouter = require('../routes/user-router');
-const itemRouter = require('../routes/item-router');
-const orderRouter = require('../routes/order-router');
+const userRouter = require('./user-router');
+const itemRouter = require('./item-router');
+const orderRouter = require('./order-router');
 
 routerIndex.use('/api/users', userRouter);
 routerIndex.use('/api/items', itemRouter);
