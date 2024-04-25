@@ -1,37 +1,35 @@
-      type: object
-      title: Users
-      properties:
-        id:
-          type: integer
-        first_name:
-          type: string
-          required: true
-        last_name:
-          type: string
-          required: true
-        email:
-          type: string
-          format: email
-          required: true
-        password:
-          type: string
-          format: bcrypt
-          required: true
-        address:
-          type: string
-          required: true
-        phone_number:
-          type: string
-          required: true
-        role :
-          type: string
-          enum : [user, admin]
-          required: true
-        isActive :
-          type: boolean
-          default : true
-        isValidate :
-          type: boolean
-          default : false
-        
-        
+type: object
+title: Users
+properties:
+  id:
+    type: integer
+  first_name:
+    type: string
+    required: true
+  last_name:
+    type: string
+    required: true
+  email:
+    type: string
+    format: email
+    required: true
+  password:
+    type: string
+    format: bcrypt
+    required: true
+  address:
+    type: string
+    required: true
+  phone_number:
+    type: string
+    required: true
+  is_admin:
+    type: boolean
+    default: false
+    required: true
+  isActive:
+    type: boolean
+    default: true
+  isValidate:
+    type: boolean
+    default: false

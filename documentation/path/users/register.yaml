@@ -8,7 +8,7 @@ post:
     content:
       application/json:
         schema:
-          $ref: "../../components/schemas/users.yaml"
+          $ref: '../../components/schemas/users.yaml'
         examples:
           javascipt:
             description: Register user
@@ -16,14 +16,14 @@ post:
               nickname: ixwn
               email: ixwn@mail.com
               password: password
-              phone_number: "082222222222"
+              phone_number: '082222222222'
   responses:
-    "201":
+    '201':
       description: Created
       content:
         application/json:
           schema:
-            $ref: "../../components/schemas/users.yaml"
+            $ref: '../../components/schemas/users.yaml'
           examples:
             javascipt:
               description: Success register user and encrypt password
@@ -32,12 +32,8 @@ post:
                 message: USER_CREATED
                 data:
                   email: Judah_Franecki@example.org
-                  password: "$2b$10$sUzftkrduo0pxpdKnWxMt.ofaFMys7BTQIY1uk8sjx6nyvKVv8SQC"
-    "400":
+                  password: '$2b$10$sUzftkrduo0pxpdKnWxMt.ofaFMys7BTQIY1uk8sjx6nyvKVv8SQC'
+    '400':
       description: Invalid input
-    "422":
+    '422':
       description: Validation exception
-  security:
-    - BingleShopAuth:
-        - write:users
-        - read:users

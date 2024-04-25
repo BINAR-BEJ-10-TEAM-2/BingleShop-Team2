@@ -1,36 +1,32 @@
-    post:
-      tags:
-      - Users
-      summary: Login user
-      description: Try to login user
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-            $ref: "../../components/schemas/users.yaml"
-            examples:
-              javascipt:
-                description: Login user
-                value:
-                  email: Adelia_Jaskolski@example.net
-                  password: password
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-              $ref: "../../components/schemas/users.yaml"
-              examples:
-                javascipt:
-                  description: Success login user
-                  value: LOGIN_SUCCESS
-        '400':
-          description: Invalid input
-        '422':
-          description: Validation exception
-      security:
-      - BingleShopAuth:
-        - write:users
-        - read:users
+post:
+  tags:
+    - Users
+  summary: Login user
+  description: Try to login user
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+        $ref: '../../components/schemas/users.yaml'
+        examples:
+          javascipt:
+            description: Login user
+            value:
+              email: Adelia_Jaskolski@example.net
+              password: password
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+          $ref: '../../components/schemas/users.yaml'
+          examples:
+            javascipt:
+              description: Success login user
+              value: LOGIN_SUCCESS
+    '400':
+      description: Invalid input
+    '422':
+      description: Validation exception
