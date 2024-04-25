@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   Item.init(
     {
-      product_name: DataTypes.STRING,
+      item_name: DataTypes.STRING,
       description: DataTypes.STRING,
       image_url: DataTypes.STRING,
       price: DataTypes.FLOAT,
@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: 'Item',
-    }
+    },
   );
   return Item;
 };
