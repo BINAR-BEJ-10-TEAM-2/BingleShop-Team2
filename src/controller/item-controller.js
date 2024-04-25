@@ -3,9 +3,9 @@ const { ResponseError } = require('../error/response-error');
 
 const createItem = async (req, res) => {
   try {
-    const { product_name, price, stock, image_url, description } = req.body;
+    const { item_name, price, stock, image_url, description } = req.body;
     const item = new Item({
-      product_name,
+      item_name,
       price,
       stock,
       image_url,
