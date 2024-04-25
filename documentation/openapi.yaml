@@ -17,9 +17,9 @@ paths:
     $ref: './path/users/update-user.yaml'
   /v2/orders:
     $ref: './path/orders/create-get-order.yaml'
-  /v2/orders/{orderId}:
+  /api/orders/{orderId}:
     $ref: './path/orders/update-order.yaml'
-  /v2/items/{itemId}:
+  /api/items/{itemId}:
     $ref: './path/items/update-delete-item.yaml'
   /api/items:
     $ref: './path/items/get-and-create-item.yaml'
