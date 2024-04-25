@@ -14,8 +14,8 @@ const compat = new FlatCompat({
 });
 
 export default [
-  { files: ['**/*.js'], languageOptions: { sourceType: 'commonjs' } },
-  { ignores: ['eslint.config.mjs','./src/config/*', './src/migrations/*']},
+  { files: ['src/**/*.js'], languageOptions: { sourceType: 'commonjs' } },
+  { ignores: ['eslint.config.mjs', 'src/models', 'migrations/*.js'] },
   { languageOptions: { globals: { ...globals.browser, ...globals.node } } },
   ...compat.extends('airbnb-base'),
   {
@@ -53,10 +53,8 @@ export default [
       'no-multiple-empty-lines': ['error', { max: 2, maxEOF: 1 }],
       'no-whitespace-before-property': 'error',
       'nonblock-statement-body-position': 'error',
-      'object-property-newline': [
-        'error',
-        { allowAllPropertiesOnSameLine: true },
-      ], //* ES6
+      'object-curly-newline': ['error', { multiline: true }],
+      //* ES6
       'arrow-spacing': 'error',
       'no-confusing-arrow': 'error',
       'no-duplicate-imports': 'error',
@@ -64,6 +62,7 @@ export default [
       'object-shorthand': 'off',
       'prefer-const': 'error',
       'prefer-template': 'warn',
+      camelcase: 'warn',
     },
   },
 ];
