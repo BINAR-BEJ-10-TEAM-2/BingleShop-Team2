@@ -24,9 +24,12 @@ get:
                   phone_number: "082222222222"
     "400":
       description: Bad Request
+    '401':
+      $ref: "../../components/responses/UnauthorizedError.yaml"
     "502":
       description: Bad Gateway Error
   security:
     - BingleShopAuth:
         - write:admin
         - read:admin
+    - bearerAuth: []

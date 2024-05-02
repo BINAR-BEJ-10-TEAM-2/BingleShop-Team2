@@ -5,3 +5,9 @@ components:
       type: apiKey
       in: header
       name: X-API-apiKey
+    bearerAuth:            
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+security:
+  - bearerAuth: []
