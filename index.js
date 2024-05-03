@@ -1,11 +1,9 @@
 require('dotenv').config();
 const express = require('express');
 
-const routerIndex = require('./src/routes/index-router');
-// const { notFound, httpEvet } = require('./src/middlewares');
-
-const logger = require('./src/libs/logger');
 const pinoHttp = require('pino-http');
+const routerIndex = require('./src/routes/index-router');
+const logger = require('./src/libs/logger');
 const { errorNotFound, errorHttpEvent } = require('./src/middlewares');
 
 const app = express();
