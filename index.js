@@ -4,8 +4,13 @@ const express = require('express');
 const routerIndex = require('./src/routes/index-router');
 const { notFound, httpEvent } = require('./src/middlewares/error-middleware');
 
+const logger = require('./src/libs/logger');
+const pinoHttp = require('pino-http');
+
 const app = express();
 const port = 3000;
+
+app.use(pinoHttp({ logger }));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -18,5 +23,5 @@ app.use(notFound);
 app.use(httpEvent);
 
 app.listen(port, () => {
-  console.log(`Example app listening on http://localhost:${port}`);
+  logger.info(`Server app listening on http://localhost:${port}`);
 });
