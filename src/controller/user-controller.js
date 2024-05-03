@@ -21,7 +21,7 @@ const register = async (req, res, next) => {
     }
 
     const user = new User({
-      nickname,
+      fullName,
       email,
       password: bcrypt.hashSync(password, 10),
       phone_number,
@@ -87,7 +87,8 @@ const login = async (req, res, next) => {
   }
 };
 
-//whoami
+
+//whoami 
 const whoami = (req, res) => {
   const currentUser = req.user;
 

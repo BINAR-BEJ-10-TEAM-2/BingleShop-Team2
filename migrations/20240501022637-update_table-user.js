@@ -2,18 +2,18 @@
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up (queryInterface, Sequelize) {
+  async up(queryInterface, Sequelize) {
     await queryInterface.addColumn(
       'Users',
       'is_admin',
       {
         type: Sequelize.BOOLEAN,
-        allowNull: false,
+        defaultValue: 'FALSE'
       }
     )
   },
 
-  async down (queryInterface, Sequelize) {
+  async down(queryInterface, Sequelize) {
     await queryInterface.removeColumn('Users', 'is_admin');
   },
 };
