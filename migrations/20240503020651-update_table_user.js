@@ -12,7 +12,7 @@ module.exports = {
     await queryInterface.renameColumn('Users', 'nickname', 'fullName');
     await queryInterface.addColumn(
       'Users',
-      'isVerified',
+      'is_verified',
       {
         type: Sequelize.BOOLEAN,
         defaultValue: 'FALSE'
@@ -27,6 +27,6 @@ module.exports = {
      * Example:
      * await queryInterface.dropTable('users');
      */
-    await queryInterface.removeColumn("Users", "isVerified");
+    await queryInterface.removeColumn("Users", "is_verified");
   }
 };
