@@ -1,1 +1,5 @@
-module.exports = { isAuthenticated: require('./isAuthenticated') };
+module.exports = {
+  isAuthenticated: require('./isAuthenticated'),
+  errorNotFound: require('./errorNotFound'),
+  errorHttpEvent: require('./errorHttpEvent'),
+};
