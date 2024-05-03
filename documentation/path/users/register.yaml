@@ -13,10 +13,10 @@ post:
           javascipt:
             description: Register user
             value:
-              nickname: ixwn
-              email: ixwn@mail.com
-              password: password
-              phone_number: "082222222222"
+              fullName: "{{$randomUserName}}"
+              email: "{{$randomExampleEmail}}"
+              password: "password"
+              phone_number: "{{$randomPhoneNumber}}"
   responses:
     "201":
       description: Created
@@ -28,11 +28,7 @@ post:
             javascipt:
               description: Success register user and encrypt password
               value:
-                success: 1
-                message: USER_CREATED
-                data:
-                  email: Judah_Franecki@example.org
-                  password: "$2b$10$sUzftkrduo0pxpdKnWxMt.ofaFMys7BTQIY1uk8sjx6nyvKVv8SQC"
+                "message": "USER_CREATED"
     "400":
       description: Invalid input
     "422":

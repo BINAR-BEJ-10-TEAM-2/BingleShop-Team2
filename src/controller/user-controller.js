@@ -3,13 +3,13 @@ const jwt = require('jsonwebtoken');
 const { User } = require('../models');
 const { ResponseError } = require('../error/response-error');
 
-const {JWT_SECRET_KEY} = process.env;
+const { JWT_SECRET_KEY } = process.env;
 
 //Register
 const register = async (req, res, next) => {
   try {
     const {
-      nickname, email, password, phone_number,is_admin,
+      fullName, email, password, phone_number, is_admin,
     } = req.body;
 
     const userExist = await User.findOne({
@@ -23,7 +23,7 @@ const register = async (req, res, next) => {
     }
 
     const user = new User({
-      nickname,
+      fullName,
       email,
       password: bcrypt.hashSync(password, 10),
       phone_number,
@@ -39,7 +39,7 @@ const register = async (req, res, next) => {
     console.log(error)
     next(error);
   }
-}; 
+};
 
 
 //Login
@@ -89,12 +89,12 @@ const login = async (req, res, next) => {
 
 
 //whoami 
-const whoami = (req,res) => {
-const currentUser = req.user;
+const whoami = (req, res) => {
+  const currentUser = req.user;
 
   return res.json({
-      id: currentUser.id,
-      email: currentUser.email
+    id: currentUser.id,
+    email: currentUser.email
   })
 }
 

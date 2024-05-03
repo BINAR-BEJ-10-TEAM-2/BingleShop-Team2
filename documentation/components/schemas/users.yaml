@@ -3,10 +3,7 @@
       properties:
         id:
           type: integer
-        first_name:
-          type: string
-          required: true
-        last_name:
+        fullName:
           type: string
           required: true
         email:
@@ -17,20 +14,13 @@
           type: string
           format: bcrypt
           required: true
-        address:
-          type: string
-          required: true
         phone_number:
           type: string
           required: true
-        role :
-          type: string
-          enum : [user, admin]
-          required: true
-        isActive :
+        id_admin :
           type: boolean
-          default : true
-        isValidate :
+          default : false
+        isVerified :
           type: boolean
           default : false
         
