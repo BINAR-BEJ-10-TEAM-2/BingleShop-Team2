@@ -3,14 +3,12 @@ const jwt = require('jsonwebtoken');
 const { User } = require('../models');
 const { ResponseError } = require('../error/response-error');
 
-const {JWT_SECRET_KEY} = process.env;
+const { JWT_SECRET_KEY } = process.env;
 
-//Register
+// Register
 const register = async (req, res, next) => {
   try {
-    const {
-      nickname, email, password, phone_number,is_admin,
-    } = req.body;
+    const { nickname, email, password, phone_number, is_admin } = req.body;
 
     const userExist = await User.findOne({
       where: {
@@ -36,13 +34,12 @@ const register = async (req, res, next) => {
       message: 'USER_CREATED',
     });
   } catch (error) {
-    console.log(error)
+    console.log(error);
     next(error);
   }
-}; 
+};
 
-
-//Login
+// Login
 const login = async (req, res, next) => {
   try {
     const userExist = await User.findOne({
@@ -70,12 +67,16 @@ const login = async (req, res, next) => {
       );
     }
 
-    const jwtPayload = jwt.sign({
-      id: userExist.id,
-      email: userExist.email,
-    }, JWT_SECRET_KEY, {
-      expiresIn: "1h"
-    })
+    const jwtPayload = jwt.sign(
+      {
+        id: userExist.id,
+        email: userExist.email,
+      },
+      JWT_SECRET_KEY,
+      {
+        expiresIn: '1h',
+      },
+    );
 
     return res.json({
       message: 'LOGIN_SUCCESS',
@@ -84,21 +85,17 @@ const login = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-
 };
 
-
-//whoami 
-const whoami = (req,res) => {
-const currentUser = req.user;
+//whoami
+const whoami = (req, res) => {
+  const currentUser = req.user;
 
   return res.json({
-      id: currentUser.id,
-      email: currentUser.email
-  })
-}
-
-
+    id: currentUser.id,
+    email: currentUser.email,
+  });
+};
 
 module.exports = {
   register,
