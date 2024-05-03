@@ -1,44 +1,26 @@
 require('dotenv').config();
 const express = require('express');
-const bcrypt = require('bcrypt');
-const passport = require('./libs/passport')
-const fs = require('fs');
-const morgan = require('morgan');
-const path = require('path');
-const routerIndex = require('./src/routes/index-router');
 
+const pinoHttp = require('pino-http');
+const routerIndex = require('./src/routes/index-router');
+const logger = require('./src/libs/logger');
+const { errorNotFound, errorHttpEvent } = require('./src/middlewares');
 
 const app = express();
 const port = 3000;
 
+app.use(pinoHttp({ logger }));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(passport.initialize())
-
-
-const accessLogStream = fs.createWriteStream(
-  path.join(__dirname, 'access.log'),
-  { flags: 'a' },
-);
-
 
 // API ROUTERS
 app.use(routerIndex);
 
-
-// Morgan Log
-app.use(
-  morgan('combined', {
-    stream: accessLogStream,
-    skip: function (req, res) {
-      return res.statusCode < 400;
-    },
-  }),
-);
-
+// ERROR HANDLERS
+app.use(errorNotFound);
+app.use(errorHttpEvent);
 
 app.listen(port, () => {
-  console.log(`Example app listening on http://localhost:${port}`);
+  logger.info(`Server app listening on http://localhost:${port}`);
 });
-
-
