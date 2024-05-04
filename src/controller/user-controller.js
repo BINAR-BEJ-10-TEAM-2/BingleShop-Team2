@@ -34,7 +34,6 @@ const register = async (req, res, next) => {
       message: 'USER_CREATED',
     });
   } catch (error) {
-    console.log(error);
     next(error);
   }
 };
