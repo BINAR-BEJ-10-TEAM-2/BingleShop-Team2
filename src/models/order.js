@@ -1,7 +1,4 @@
-
-const {
-  Model,
-} = require('sequelize');
+const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
   class Order extends Model {
@@ -11,16 +8,24 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      this.belongsToMany(models.Item, {
+        as: 'items',
+        through: { model: models.OrderItem },
+        foreignKey: 'order_id',
+      });
     }
   }
-  Order.init({
-    address_to: DataTypes.STRING,
-    quantity: DataTypes.INTEGER,
-    status: DataTypes.ENUM('completed', 'pending'),
-  }, {
-    sequelize,
-    modelName: 'Order',
-  });
+  Order.init(
+    {
+      user_id: DataTypes.INTEGER,
+      address_to: DataTypes.STRING,
+      total_order_price: DataTypes.DECIMAL,
+      status: DataTypes.ENUM('completed', 'pending'),
+    },
+    {
+      sequelize,
+      modelName: 'Order',
+    },
+  );
   return Order;
 };
