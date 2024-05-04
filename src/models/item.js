@@ -1,7 +1,4 @@
-
-const {
-  Model,
-} = require('sequelize');
+const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
   class Item extends Model {
@@ -14,12 +11,18 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  Item.init({
-    product_name: DataTypes.STRING,
-    price: DataTypes.INTEGER,
-  }, {
-    sequelize,
-    modelName: 'Item',
-  });
+  Item.init(
+    {
+      item_name: DataTypes.STRING,
+      description: DataTypes.STRING,
+      image_url: DataTypes.STRING,
+      price: DataTypes.FLOAT,
+      stock: DataTypes.INTEGER,
+    },
+    {
+      sequelize,
+      modelName: 'Item',
+    },
+  );
   return Item;
 };

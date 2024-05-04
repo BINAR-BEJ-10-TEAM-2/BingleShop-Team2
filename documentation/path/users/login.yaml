@@ -28,6 +28,8 @@
                   value: LOGIN_SUCCESS
         '400':
           description: Invalid input
+        '401':
+          $ref: "../../components/responses/UnauthorizedError.yaml" 
         '422':
           description: Validation exception
       security:
