@@ -36,6 +36,7 @@ const getItem = async (req, res) => {
 };
 
 const updateItem = async (req, res) => {
+
   try {
     const { itemId } = req.params;
 
@@ -45,7 +46,16 @@ const updateItem = async (req, res) => {
       throw new ResponseError(404, 'ITEM_NOT_FOUND');
     }
 
-    const dataItem = await Item.update(req.body, {
+    const { item_name, price, stock, image_url, description } = req.body;
+    const item = {
+      item_name,
+      price,
+      stock,
+      image_url,
+      description,
+    };
+
+    const dataItem = await Item.update(item, {
       where: { id: itemId },
       returning: true,
     });
@@ -59,4 +69,38 @@ const updateItem = async (req, res) => {
   }
 };
 
-module.exports = { createItem, getItem, updateItem };
+const getItemById = async (req, res) => {
+  try {
+
+    const { itemId } = req.params;
+    const itemFound = await Item.findByPk(itemId);
+    if (!itemFound) {
+      throw new ResponseError(404, 'ITEM_NOT_FOUND');
+    }
+
+    return res.status(200).json({
+      data: { itemFound },
+    });
+  } catch (error) {
+    return res.status(400).json({ message: error.message });
+  }
+};
+
+const deleteItemById = async (req, res) => {
+  try {
+    const { itemId } = req.params;
+    const itemFound = await Item.findByPk(itemId);
+    if (!itemFound) {
+      throw new ResponseError(404, 'ITEM_NOT_FOUND');
+    }
+    await itemFound.destroy()
+
+    return res.status(200).json({
+      message: 'ITEM_DELETED'
+    });
+  } catch (error) {
+    return res.status(400).json({ message: error.message });
+  }
+};
+
+module.exports = { createItem, getItem, updateItem, getItemById, deleteItemById };
