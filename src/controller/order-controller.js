@@ -9,7 +9,6 @@ const createOrder = async (req, res, next) => {
     orders.quantity = req.body.quantity;
     orders.status = 'pending';
 
-    console.log('CHECKED => ', orders);
     await orders.save();
 
     return res.json({
@@ -34,11 +33,8 @@ const putOrder = async (req, res, next) => {
     const orders = Order;
     orders.status = 'completed';
 
-    // console.log("ORDER_ID",req)
     const orderIndex = await Order.findOne({ where: { id: orderId } });
-    console.log('INI ORDER INDEX', orderIndex);
     if (!orderIndex) {
-      // await orders.save();
       return res.send('ORDER_NOT_FOUND');
     }
     await orders.update(
