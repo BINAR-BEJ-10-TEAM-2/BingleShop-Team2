@@ -1,7 +1,6 @@
 const { Order } = require('../models');
 const { ResponseError } = require('../error/response-error');
 
-
 const createOrder = async (req, res, next) => {
   try {
     const orders = new Order();
@@ -9,7 +8,6 @@ const createOrder = async (req, res, next) => {
     orders.quantity = req.body.quantity;
     orders.status = 'pending';
 
-    console.log('CHECKED => ', orders);
     await orders.save();
 
     return res.json({

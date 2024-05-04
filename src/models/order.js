@@ -1,7 +1,4 @@
-
-const {
-  Model,
-} = require('sequelize');
+const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
   class Order extends Model {
@@ -14,13 +11,17 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  Order.init({
-    address_to: DataTypes.STRING,
-    quantity: DataTypes.INTEGER,
-    status: DataTypes.ENUM('completed', 'pending'),
-  }, {
-    sequelize,
-    modelName: 'Order',
-  });
+  Order.init(
+    {
+      user_id: DataTypes.INTEGER,
+      address_to: DataTypes.STRING,
+      total_order_price: DataTypes.DECIMAL,
+      status: DataTypes.ENUM('completed', 'pending'),
+    },
+    {
+      sequelize,
+      modelName: 'Order',
+    },
+  );
   return Order;
 };
