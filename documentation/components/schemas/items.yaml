@@ -12,7 +12,7 @@ properties:
   price:
     type: integer
     required: true
-  picture:
+  image_url:
     type: string
     required: true
   description:
