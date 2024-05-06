@@ -87,8 +87,8 @@ const login = async (req, res, next) => {
 };
 
 
-//whoami 
-const whoami = (req, res) => {
+//myProfile 
+const myProfile = (req, res) => {
   const currentUser = req.user;
 
   return res.json({
@@ -100,5 +100,5 @@ const whoami = (req, res) => {
 module.exports = {
   register,
   login,
-  whoami,
+  myProfile,
 };
