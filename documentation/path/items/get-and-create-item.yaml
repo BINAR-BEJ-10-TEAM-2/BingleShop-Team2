@@ -18,11 +18,13 @@
                     item_name: NutriJon
                     stock: 30
                     price: 30000
+                    image_url: https://res.cloudinary.com/xxx
                     description: Dessert
                   - id: '2'
                     item_name: Mamak Melon
                     stock: 15
                     price: 20000
+                    image_url: https://res.cloudinary.com/xxx
                     description: Dish Soap
         '400':
           description: Invalid input
@@ -48,6 +50,7 @@
                   item_name: Black Bean
                   stock: 20
                   price: 30000
+                  image_url: https://res.cloudinary.com/xxx
                   description: Margarin
       responses:
         '200':
@@ -67,6 +70,7 @@
                       item_name: Black Bean
                       stock: 20
                       price: 30000
+                      image_url: https://res.cloudinary.com/xxx
                       description: Margarin          
         '400':
           description: Invalid input

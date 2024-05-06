@@ -1,9 +1,12 @@
 const { Item } = require('../models');
 const { ResponseError } = require('../error/response-error');
+const { uploadToCloudinary } = require('../libs/cloudinary');
 
 const createItem = async (req, res) => {
   try {
-    const { item_name, price, stock, image_url, description } = req.body;
+    const { item_name, price, stock, description } = req.body;
+    const image_url = await uploadToCloudinary(req.file.path);
+
     const item = new Item({
       item_name,
       price,
