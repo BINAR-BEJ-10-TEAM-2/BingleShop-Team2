@@ -8,7 +8,9 @@ const { JWT_SECRET_KEY } = process.env;
 // Register
 const register = async (req, res, next) => {
   try {
-    const { fullName, email, password, phone_number, is_admin } = req.body;
+    const {
+      fullName, email, password, phone_number, is_admin,
+    } = req.body;
 
     const userExist = await User.findOne({
       where: {
@@ -34,7 +36,6 @@ const register = async (req, res, next) => {
       message: 'USER_CREATED',
     });
   } catch (error) {
-    console.log(error);
     next(error);
   }
 };
@@ -87,9 +88,8 @@ const login = async (req, res, next) => {
   }
 };
 
-
-//whoami 
-const whoami = (req, res) => {
+//myProfile
+const myProfile = (req, res) => {
   const currentUser = req.user;
 
   return res.json({
@@ -101,5 +101,5 @@ const whoami = (req, res) => {
 module.exports = {
   register,
   login,
-  whoami,
+  myProfile,
 };
