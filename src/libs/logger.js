@@ -16,12 +16,8 @@ const logger = pino({
   customLevels: levels,
   useOnlyCustomLevels: true,
   formatters: {
-    bindings: (bindings) => {
-      return { pid: bindings.pid, host: bindings.hostname };
-    },
-    level: (label) => {
-      return { severity: label.toUpperCase() };
-    },
+    bindings: (bindings) => ({ pid: bindings.pid, host: bindings.hostname }),
+    level: (label) => ({ severity: label.toUpperCase() }),
   },
   timestamp: () => `,"timestamp":"${new Date(Date.now()).toISOString()}"`,
 });

@@ -1,6 +1,6 @@
 const itemRouter = require('express').Router();
 const itemController = require('../controller/item-controller');
-const {upload} = require('../libs/multer');
+const { upload } = require('../libs/multer');
 const { isAdmin } = require('../middlewares');
 
 itemRouter.post('/admin/add-item', isAdmin, upload.single('item_image'), itemController.createItem);
