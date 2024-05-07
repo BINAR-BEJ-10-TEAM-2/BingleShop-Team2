@@ -96,7 +96,7 @@ const deleteItemById = async (req, res) => {
     if (!itemFound) {
       throw new ResponseError(404, 'ITEM_NOT_FOUND');
     }
-    await itemFound.destroy()
+    await itemFound.destroy();
 
     return res.status(200).json({
       message: 'ITEM_DELETED'
