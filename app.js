@@ -7,7 +7,6 @@ const logger = require('./src/libs/logger');
 const { errorNotFound, errorHttpEvent } = require('./src/middlewares');
 
 const app = express();
-const port = process.env.SERVER_PORT || 3000;
 
 app.use(pinoHttp({ logger }));
 
@@ -21,6 +20,4 @@ app.use(routerIndex);
 app.use(errorNotFound);
 app.use(errorHttpEvent);
 
-app.listen(port, () => {
-  logger.info(`Server app listening on http://localhost:${port}`);
-});
+module.exports = app;
