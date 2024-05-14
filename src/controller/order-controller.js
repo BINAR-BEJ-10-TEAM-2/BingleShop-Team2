@@ -1,4 +1,5 @@
 const { Order, Item, OrderItem } = require('../models');
+const { ResponseError } = require('../error/response-error');
 
 const decreaseStock = async (items) => {
   if (!items || items.length === 0) {
@@ -15,13 +16,13 @@ const decreaseStock = async (items) => {
     // Execute all the decrement operations concurrently
     await Promise.all(decrementPromises);
   } catch (error) {
-    throw new Error(`Failed to decrease stock: ${error.message}`);
+    throw new ResponseError(`Failed to decrease stock: ${error.message}`);
   }
 };
 
 const createOrder = async (req, res, next) => {
   try {
-    const { items, order } = req.body;
+    const { items } = req.body;
 
     // Mengambil itemId
     const itemIds = items.map((item) => item.id);
@@ -94,11 +95,50 @@ const createOrder = async (req, res, next) => {
   }
 };
 
-const getOrder = async (req, res, next) => {
+const getUserOrder = async (req, res, next) => {
   try {
-    const idOrder = req.params.orderId;
+    const idUser = req.user.id;
+    const order = await Order.findAll({
+      where: { user_id: idUser },
+      include: [
+        {
+          model: Item,
+          as: 'items',
+          attributes: ['id', 'item_name'],
+          through: { attributes: ['quantity'] },
+        },
+      ],
+    });
+    return res.json({ data: order });
+  } catch (error) {
+    // Handle errors
+    next(error);
+  }
+};
 
-    const order = await Order.findByPk(idOrder);
+const getSpecifiedUserOrder = async (req, res, next) => {
+  try {
+    const idUser = req.user.id;
+    const idOrder = req.params.orderId;
+    const isIdOrderExist = await Order.findOne({
+      where: { user_id: idUser, id: idOrder },
+    });
+
+    if (!isIdOrderExist) {
+      throw new ResponseError(404, 'ORDER_NOT_FOUND');
+    }
+
+    const order = await Order.findAll({
+      where: { user_id: idUser, id: idOrder },
+      include: [
+        {
+          model: Item,
+          as: 'items',
+          attributes: ['id', 'item_name'],
+          through: { attributes: ['quantity'] },
+        },
+      ],
+    });
     return res.json({ data: order });
   } catch (error) {
     // Handle errors
@@ -108,7 +148,16 @@ const getOrder = async (req, res, next) => {
 
 const getListOrder = async (req, res, next) => {
   try {
-    const order = await Order.findAll();
+    const order = await Order.findAll({
+      include: [
+        {
+          model: Item,
+          as: 'items',
+          attributes: ['id', 'item_name'],
+          through: { attributes: ['quantity'] },
+        },
+      ],
+    });
     return res.json({ data: order });
   } catch (error) {
     // Handle errors
@@ -135,6 +184,7 @@ const putOrder = async (req, res, next) => {
 module.exports = {
   createOrder,
   putOrder,
-  getOrder,
+  getUserOrder,
+  getSpecifiedUserOrder,
   getListOrder,
 };

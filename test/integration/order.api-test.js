@@ -40,7 +40,7 @@ describe('POST /api/orders/:userId/create-order', () => {
           },
         ],
       });
-    expect(response.status).toBe(200);
+    expect(response.status).toBe(201);
     expect(response.body.message).toBe('ORDER_CREATED');
   });
 
@@ -56,3 +56,18 @@ describe('POST /api/orders/:userId/create-order', () => {
 
   // })
 });
+
+describe('GET /api/orders/:userId', () => {
+  let token;
+  beforeEach(async () => {
+    await sequelize.sync({ force: true });
+    await createTestUser();
+    await createTestItem();
+    // Generate JWT token
+    token = await generateToken(getTestUser);
+  });
+
+  it('should get specified order', () => {
+
+  })
+})

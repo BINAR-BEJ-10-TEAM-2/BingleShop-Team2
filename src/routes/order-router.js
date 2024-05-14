@@ -2,8 +2,9 @@ const orderRouter = require('express').Router();
 const orderController = require('../controller/order-controller');
 const { isAdmin } = require('../middlewares');
 
-orderRouter.post('/:userId/create-order', orderController.createOrder);
-orderRouter.get('/:orderId', orderController.getOrder);
+orderRouter.post('/create-order', orderController.createOrder);
+orderRouter.get('/order-list', orderController.getUserOrder);
+orderRouter.get('/order-list/:orderId', orderController.getSpecifiedUserOrder);
 orderRouter.put('/:orderId/completed', orderController.putOrder);
 
 // Admin
