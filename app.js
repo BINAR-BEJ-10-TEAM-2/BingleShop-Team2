@@ -8,7 +8,9 @@ const { errorNotFound, errorHttpEvent } = require('./src/middlewares');
 
 const app = express();
 
-app.use(pinoHttp({ logger }));
+if (process.env.NODE_ENV !== 'test') {
+  app.use(pinoHttp({ logger }));
+}
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
