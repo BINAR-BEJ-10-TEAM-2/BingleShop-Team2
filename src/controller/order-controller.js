@@ -77,7 +77,18 @@ const createOrder = async (req, res, next) => {
 
     await decreaseStock(items);
     const orderItems = await OrderItem.bulkCreate(orderDetails);
-    return res.json({ message: 'ORDER_CREATED', data: orderItems });
+    const data = {
+      order_id: orderDB.id,
+      user_id: orderDB.user_id,
+      address_to: orderDB.address_to,
+      total_order_price: orderDB.total_order_price,
+      status: orderDB.status,
+      items: orderItems.map((item) => ({
+        id: item.item_id,
+        quantity: item.quantity,
+      })),
+    };
+    return res.status(201).json({ message: 'ORDER_CREATED', data });
   } catch (error) {
     next(error);
   }
@@ -91,7 +102,7 @@ const getOrder = async (req, res, next) => {
     return res.json({ data: order });
   } catch (error) {
     // Handle errors
-    return res.status(500).json({ error: error.message });
+    next(error);
   }
 };
 
@@ -101,7 +112,7 @@ const getListOrder = async (req, res, next) => {
     return res.json({ data: order });
   } catch (error) {
     // Handle errors
-    return res.status(500).json({ error: error.message });
+    next(error);
   }
 };
 
@@ -117,7 +128,7 @@ const putOrder = async (req, res, next) => {
     await orderIndex.update({ status: 'completed' });
     return res.status(200).send({ message: 'ORDER_UPDATED' });
   } catch (error) {
-    return res.status(500).json({ error: error.message });
+    next(error);
   }
 };
 
