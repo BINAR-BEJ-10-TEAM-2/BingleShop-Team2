@@ -1,6 +1,8 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { User, Item } = require('../../src/models');
+const { 
+  User, Item, Order, OrderItem 
+} = require('../../src/models');
 
 const createTestUser = async () => {
   await User.create({
@@ -41,10 +43,27 @@ const generateToken = async () => {
   return jwt.sign({ id: testUser.id, isAdmin: false }, process.env.JWT_SECRET_KEY, { expiresIn: '1h' });
 };
 
+const createTestOrder = async () => {
+  const testUser = await getTestUser();
+  const testItem = await getTestItem();
+  const orderItem = await OrderItem.create({
+    item_id: testItem.id,
+    quantity: 2,
+  });
+  return Order.create({
+    user_id: testUser.id,
+    address_to: 'Jl. Gatot Subroto',
+    total_order_price: 20000,
+    status: 'pending',
+    items: [orderItem],
+  });
+};
+
 module.exports = {
   createTestUser,
   createTestItem,
   getTestUser,
   getTestItem,
   generateToken,
+  createTestOrder,
 };
