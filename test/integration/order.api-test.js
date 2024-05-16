@@ -11,7 +11,7 @@ const {
   generateToken,
 } = require('../helpers/test-utils');
 
-describe('POST /api/orders/:userId/create-order', () => {
+describe('POST /api/orders/create-order', () => {
   let token;
   beforeEach(async () => {
     await sequelize.sync({ force: true });
@@ -25,7 +25,7 @@ describe('POST /api/orders/:userId/create-order', () => {
     const testUser = await getTestUser();
     const testItem = await getTestItem();
     const response = await supertest(app)
-      .post(`/api/orders/${testUser.id}/create-order`)
+      .post('/api/orders/create-order')
       .set('Authorization', `Bearer ${token}`)
       .send({
         order: {
@@ -57,17 +57,18 @@ describe('POST /api/orders/:userId/create-order', () => {
   // })
 });
 
-describe('GET /api/orders/:userId', () => {
-  let token;
-  beforeEach(async () => {
-    await sequelize.sync({ force: true });
-    await createTestUser();
-    await createTestItem();
-    // Generate JWT token
-    token = await generateToken(getTestUser);
-  });
+// describe('GET /api/orders/:userId', () => {
+//   let token;
+//   beforeEach(async () => {
+//     await sequelize.sync({ force: true });
+//     await createTestUser();
+//     await createTestItem();
+//     await createTestOrder();
+//     // Generate JWT token
+//     token = await generateToken(getTestUser);
+//   });
 
-  it('should get specified order', () => {
+//   it('should get specified order', () => {
 
-  })
-})
+//   })
+// })
