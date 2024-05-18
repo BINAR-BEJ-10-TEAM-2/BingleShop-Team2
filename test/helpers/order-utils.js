@@ -27,13 +27,11 @@ const createTestOrder = async (req, res) => {
   return order;
 };
 
-const getTestOrder = async () => await Order.findAll({
-  where: {
-    user_id: 1,
-  },
-});
+const getTestOrder = async () => await Order.findAll();
+const getTestSpecifiedOrder = async () => await Order.findOne({ where: { id: 1 } });
 
 module.exports = {
   createTestOrder,
   getTestOrder,
+  getTestSpecifiedOrder,
 };
