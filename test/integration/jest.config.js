@@ -1,5 +1,5 @@
 module.exports = {
   testRegex: [
-    '.api-test.js$',
+    '.test.js$',
   ],
 };
