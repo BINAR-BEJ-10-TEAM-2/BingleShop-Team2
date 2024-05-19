@@ -8,7 +8,6 @@ const {
   createTestUserAdmin,
 } = require('../../helpers/user-utils');
 const {
-  createTestItem2,
   createTestItem,
   updateItemDummy
 } = require('../../helpers/item-utils');
@@ -19,14 +18,13 @@ describe('PUT /api/items/admin/update-item/:itemId', () => {
         await database.cleanup();
         await createTestUserAdmin();
         await createTestItem();
-        await createTestItem2();
     })
 
     it('should update specified item by id', async () => {
         const token = await createTestUserAdmin();
 
         const result = await supertest(app)
-        .put(`/api/items/admin/update-item/2`)
+        .put(`/api/items/admin/update-item/1`)
         .set('Authorization', `Bearer ${token}`)
         .send(updateItemDummy);
 

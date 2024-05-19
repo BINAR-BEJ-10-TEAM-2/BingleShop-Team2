@@ -12,16 +12,6 @@ const createTestItem = async () => {
   });
 };
 
-const createTestItem2 = async () => {
-  await Item.create({
-    item_name: 'Test Item Ekonomi',
-    price: 5000,
-    stock: 5,
-    description: 'Test deskripsi Item Ekonomi',
-    image_url: 'https://cloudinary.com/ekonomi-test.jpg',
-  });
-};
-
 const getTestItem = async () => await Item.findOne({
   where: {
     item_name: 'Test Item Sunlight',
@@ -38,7 +28,6 @@ const updateItemDummy = {
 
 module.exports = {
   createTestItem,
-  createTestItem2,
   getTestItem,
   updateItemDummy,
 };

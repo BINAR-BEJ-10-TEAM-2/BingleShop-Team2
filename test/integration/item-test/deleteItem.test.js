@@ -9,7 +9,6 @@ const {
 } = require('../../helpers/user-utils');
 const {
     createTestItem,
-    createTestItem2,
   } = require('../../helpers/item-utils');
 const database = require('../../helpers/database');
 
@@ -18,7 +17,6 @@ describe('DELETE /api/items/admin/delete-item/:itemId', () => {
         await database.cleanup();
         await createTestUserAdmin();
         await createTestItem();
-        await createTestItem2();
     })
 
     it('should delete specified item by id', async () => {
