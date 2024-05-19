@@ -38,6 +38,8 @@ const getTestItem = async () => await Item.findOne({
   },
 });
 
+const getTestItemById = async (itemId) => await Item.findByPk(itemId);
+
 const generateToken = async () => {
   const testUser = await getTestUser();
   return jwt.sign({ id: testUser.id, isAdmin: false }, process.env.JWT_SECRET_KEY, { expiresIn: '1h' });
@@ -66,4 +68,5 @@ module.exports = {
   getTestItem,
   generateToken,
   createTestOrder,
+  getTestItemById
 };
