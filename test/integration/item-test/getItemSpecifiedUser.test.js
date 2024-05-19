@@ -12,7 +12,7 @@ const {
   createTestItem,
 } = require('../../helpers/item-utils');
 
-describe('POST /api/items/admin/add-item', () => {
+describe('POST /api/items/admin/specified-item/:itemId', () => {
   beforeEach(async () => {
     await sequelize.sync({ force: true });
     await createTestUserAdmin();

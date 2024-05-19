@@ -38,7 +38,7 @@ const getItem = async (req, res) => {
   }
 };
 
-const updateItem = async (req, res) => {
+const updateItem = async (req, res, next) => {
 
   try {
     const { itemId } = req.params;
@@ -68,7 +68,7 @@ const updateItem = async (req, res) => {
       data: { dataItem },
     });
   } catch (error) {
-    return res.status(400).json({ message: error.message });
+    return next(error);
   }
 };
 
@@ -89,7 +89,7 @@ const getItemById = async (req, res) => {
   }
 };
 
-const deleteItemById = async (req, res) => {
+const deleteItemById = async (req, res, next) => {
   try {
     const { itemId } = req.params;
     const itemFound = await Item.findByPk(itemId);
@@ -101,8 +101,9 @@ const deleteItemById = async (req, res) => {
     return res.status(200).json({
       message: 'ITEM_DELETED'
     });
+
   } catch (error) {
-    return res.status(400).json({ message: error.message });
+    return next(error);
   }
 };
 
