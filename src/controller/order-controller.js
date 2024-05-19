@@ -1,4 +1,6 @@
-const { Order, Item, OrderItem } = require('../models');
+const {
+  Order, Item, OrderItem, User,
+} = require('../models');
 const { ResponseError } = require('../error/response-error');
 
 const decreaseStock = async (items) => {
@@ -23,7 +25,12 @@ const decreaseStock = async (items) => {
 const createOrder = async (req, res, next) => {
   try {
     const { items } = req.body;
+    const userId = req.user.id;
+    const isAdmin = await User.findOne({ where: { id: userId, is_admin: true } });
 
+    if (isAdmin) {
+      throw new ResponseError(400, 'ADMIN_CANT_CREATE_ORDER');
+    }
     // Mengambil itemId
     const itemIds = items.map((item) => item.id);
     // Mengambil data Items dari Database
