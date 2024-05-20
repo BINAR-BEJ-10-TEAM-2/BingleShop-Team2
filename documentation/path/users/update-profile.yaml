@@ -1,8 +1,8 @@
 put:
   tags:
     - Users
-  summary: Update user data
-  description: Update user data
+  summary: Update user profile
+  description: Update user profile
   requestBody:
     required: true
     content:
@@ -11,9 +11,10 @@ put:
           $ref: "../../components/schemas/users.yaml"
         examples:
           javascipt:
-            description: Update user data based on requested properties in body
+            description: Update user profile based on requested properties in body
             value :
-              address: Tangerang
+              fullName: Someone
+              email: something@binar.com
               phone_number: "081122223333"
 
   responses:
@@ -28,12 +29,8 @@ put:
               description: Updated user data
               value:
                 user_data:
-                  id : 0
-                  first_name: Farix
-                  last_name: Ikhwanul
+                  fullName: Ikhwanul
                   email : Judah_Franecki@example.org
-                  password: password
-                  adaddress: Tangerang
                   phone_number: "081122223333"
     "400":
       description: Bad Request

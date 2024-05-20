@@ -5,5 +5,6 @@ const { isAuthenticated } = require('../middlewares');
 userRouter.post('/register', userController.register);
 userRouter.post('/login', userController.login);
 userRouter.get('/my-profile', isAuthenticated, userController.myProfile);
+userRouter.put('/update-profile', isAuthenticated, userController.updateProfile);
 
 module.exports = userRouter;

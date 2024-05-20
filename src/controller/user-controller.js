@@ -92,14 +92,44 @@ const login = async (req, res, next) => {
 const myProfile = (req, res) => {
   const currentUser = req.user;
 
+  console.log(currentUser.id);
+
   return res.json({
-    id: currentUser.id,
+    fullName: currentUser.fullName,
     email: currentUser.email,
+    phone_number: currentUser.phone_number,
   });
 };
+
+const updateProfile = async (req, res, next) => {
+  const currentUser = req.user;
+
+  try {  
+    const {
+      fullName, email, phone_number,
+    } = req.body;
+
+    const dataUser = await User.update({
+      fullName,
+      email,
+      phone_number,
+    }, {
+      where: {id: currentUser.id},
+      returning: true,
+    });
+  
+  return res.status(200).json({
+    message: 'USER_PROFILE_UPDATED',
+    data: dataUser 
+  })
+  } catch (error) {
+    next(error);
+  }
+}
 
 module.exports = {
   register,
   login,
   myProfile,
+  updateProfile,
 };
