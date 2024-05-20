@@ -1,19 +1,21 @@
 const cloudinary = require('cloudinary').v2;
-const fs = require('fs');
 
 cloudinary.config({
   secure: true,
 });
 
-const uploadToCloudinary = async (filepath) => {
-  try {
-    const result = await cloudinary.uploader.upload(filepath, { use_filename: true });
-    fs.unlinkSync(filepath);
-    return result.url;
-  } catch (err) {
-    fs.unlinkSync(filepath);
-    return null;
-  }
-};
+const uploadToCloudinary = (fileBuffer, filename) => new Promise((resolve, reject) => {
+  const uploadStream = cloudinary.uploader.upload_stream(
+    { resource_type: 'image', use_filename: true, public_id: filename },
+    (error, result) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(result.secure_url);
+      }
+    },
+  );
+  uploadStream.end(fileBuffer);
+});
 
 module.exports = { uploadToCloudinary };
