@@ -92,7 +92,7 @@ const login = async (req, res, next) => {
 const myProfile = (req, res) => {
   const currentUser = req.user;
 
-  console.log(currentUser.id);
+  //console.log(currentUser.id);
 
   return res.json({
     fullName: currentUser.fullName,
