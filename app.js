@@ -18,6 +18,10 @@ app.use(express.urlencoded({ extended: false }));
 // API ROUTERS
 app.use(routerIndex);
 
+app.get("/healthcheck", (req, res) => {
+  res.sendStatus(200)
+})
+
 // ERROR HANDLERS
 app.use(errorNotFound);
 app.use(errorHttpEvent);
