@@ -3,22 +3,20 @@ const supertest = require('supertest');
 const {
   describe, it, expect, beforeEach,
 } = require('@jest/globals');
-const { sequelize } = require('../../../src/models');
 const app = require('../../../app');
 const {
   createTestUserAdmin,
 } = require('../../helpers/user-utils');
 const {
-  createTestItem,
-  createTestItem2,
+  // createTestItem,
+  createTestManyItems,
 } = require('../../helpers/item-utils');
+const database = require('../../helpers/database');
 
 describe('POST /api/items/admin/add-item', () => {
   beforeEach(async () => {
-    await sequelize.sync({ force: true });
-    await createTestUserAdmin();
-    await createTestItem();
-    await createTestItem2();
+    await database.cleanup();
+    await createTestManyItems();
   });
 
   it('should get all item', async () => {
@@ -27,8 +25,6 @@ describe('POST /api/items/admin/add-item', () => {
     const response = await supertest(app)
       .get('/api/items/list')
       .set('Authorization', `Bearer ${token}`);
-
-      console.log(response.body.data)
 
     expect(response.status).toBe(200);
   });
