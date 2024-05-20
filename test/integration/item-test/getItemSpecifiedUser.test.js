@@ -3,7 +3,6 @@ const supertest = require('supertest');
 const {
   describe, it, expect, beforeEach,
 } = require('@jest/globals');
-const { sequelize } = require('../../../src/models');
 const app = require('../../../app');
 const {
   createTestUserAdmin,
@@ -11,11 +10,11 @@ const {
 const {
   createTestItem,
 } = require('../../helpers/item-utils');
+const database = require('../../helpers/database');
 
 describe('POST /api/items/admin/specified-item/:itemId', () => {
   beforeEach(async () => {
-    await sequelize.sync({ force: true });
-    await createTestUserAdmin();
+    await database.cleanup();
     await createTestItem();
   });
 

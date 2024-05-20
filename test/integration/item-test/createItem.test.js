@@ -4,11 +4,11 @@ const supertest = require('supertest');
 const {
   describe, it, expect, beforeEach,
 } = require('@jest/globals');
-const { sequelize } = require('../../../src/models');
 const app = require('../../../app');
 const {
   createTestUserAdmin,
 } = require('../../helpers/user-utils');
+const database = require('../../helpers/database');
 
 describe('POST /api/items/admin/add-item', () => {
   // const filePath = ${__dirname}/uploads/image.png
@@ -16,9 +16,8 @@ describe('POST /api/items/admin/add-item', () => {
   // console.log(filePath)
 
   beforeEach(async () => {
-    await sequelize.sync({ force: true });
+    await database.cleanup();
     await createTestUserAdmin();
-    // Generate JWT token
   });
 
   it('should create a new item', async () => {
