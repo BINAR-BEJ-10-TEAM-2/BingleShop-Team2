@@ -1,5 +1,5 @@
 const {
-  Order, Item, OrderItem, User,
+  Order, Item, OrderItem,
 } = require('../models');
 const { ResponseError } = require('../error/response-error');
 
@@ -25,10 +25,9 @@ const decreaseStock = async (items) => {
 const createOrder = async (req, res, next) => {
   try {
     const { items } = req.body;
-    const userId = req.user.id;
-    const isAdmin = await User.findOne({ where: { id: userId, is_admin: true } });
+    const isAdmin = req.user.is_admin;
 
-    if (isAdmin) {
+    if (isAdmin === true) {
       throw new ResponseError(400, 'ADMIN_CANT_CREATE_ORDER');
     }
     // Mengambil itemId
