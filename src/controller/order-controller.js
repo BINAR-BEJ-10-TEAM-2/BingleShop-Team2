@@ -171,13 +171,13 @@ const getListOrder = async (req, res, next) => {
   }
 };
 
-const putOrder = async (req, res, next) => {
+const updateOrder = async (req, res, next) => {
   try {
     const orderById = req.params.orderId;
 
     const orderIndex = await Order.findByPk(orderById);
     if (!orderIndex) {
-      return res.status(400).json({ message: 'ORDER_NOT_FOUND' });
+      throw new ResponseError(404, 'ORDER_NOT_FOUND')
     }
 
     await orderIndex.update({ status: 'completed' });
@@ -189,7 +189,7 @@ const putOrder = async (req, res, next) => {
 
 module.exports = {
   createOrder,
-  putOrder,
+  updateOrder,
   getUserOrder,
   getSpecifiedUserOrder,
   getListOrder,

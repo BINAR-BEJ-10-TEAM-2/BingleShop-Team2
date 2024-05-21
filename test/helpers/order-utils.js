@@ -29,9 +29,11 @@ const createTestOrder = async (req, res) => {
 
 const getTestOrder = async () => await Order.findAll();
 const getTestSpecifiedOrder = async () => await Order.findOne({ where: { id: 1 } });
+const putTestOrder = async () => await Order.findOne({ where: { id: 1 } });
 
 module.exports = {
   createTestOrder,
   getTestOrder,
+  putTestOrder,
   getTestSpecifiedOrder,
 };
