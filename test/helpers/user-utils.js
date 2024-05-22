@@ -35,9 +35,9 @@ const createTestUserAdmin = async () => {
 const getTestUser = async () => await User.findOne();
 
 const updateProfileDummy = {
-    fullName: 'User Error',
-    email: 'userbohongan@binar.com',
-    phone_number: '081122223333'
+  fullName: 'User Error',
+  email: 'userbohongan@binar.com',
+  phone_number: '081122223333'
 }
 
 module.exports = { createTestUser, createTestUserAdmin, getTestUser, updateProfileDummy };
