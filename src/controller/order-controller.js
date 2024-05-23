@@ -177,7 +177,7 @@ const updateOrder = async (req, res, next) => {
 
     const orderIndex = await Order.findByPk(orderById);
     if (!orderIndex) {
-      throw new ResponseError(404, 'ORDER_NOT_FOUND')
+      throw new ResponseError(404, 'ORDER_NOT_FOUND');
     }
 
     await orderIndex.update({ status: 'completed' });

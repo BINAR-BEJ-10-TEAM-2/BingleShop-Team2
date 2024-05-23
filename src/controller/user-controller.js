@@ -1,7 +1,8 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { User } = require('../models');
+const { User, Verification } = require('../models');
 const { ResponseError } = require('../error/response-error');
+const { sendVerificationEmail } = require('../libs/email');
 
 const { JWT_SECRET_KEY } = process.env;
 
@@ -9,7 +10,7 @@ const { JWT_SECRET_KEY } = process.env;
 const register = async (req, res, next) => {
   try {
     const {
-      fullName, email, password, phone_number, is_admin,
+      fullName, email, password, phone_number, is_admin, is_verified,
     } = req.body;
 
     const userExist = await User.findOne({
@@ -22,19 +23,60 @@ const register = async (req, res, next) => {
       throw new ResponseError(400, 'EMAIL_ALREADY_EXIST');
     }
 
-    const user = new User({
+    const user = await User.create({
       fullName,
       email,
       password: bcrypt.hashSync(password, 10),
       phone_number,
       is_admin,
+      is_verified,
     });
 
-    await user.save();
+    const generateToken = jwt.sign({ id: user.id }, JWT_SECRET_KEY, { expiresIn: '30m' }, { algorithm: 'HS256' });
 
-    return res.json({
-      message: 'USER_CREATED',
-    });
+    if (user) {
+      const setToken = await Verification.create({ user_id: user.id, token: generateToken });
+
+      if (setToken) {
+        await sendVerificationEmail(user, setToken.token, next);
+      } else {
+        throw new ResponseError(400, 'TOKEN_NOT_GENERATED');
+      }
+
+      return res.json({
+        message: 'USER_CREATED',
+        data: {
+          fullname: user.fullName,
+          email: user.email,
+          password: user.password,
+          phone_number: user.phone_number,
+        },
+      });
+    }
+    throw new ResponseError(400, 'USER_NOT_CREATED');
+  } catch (error) {
+    next(error);
+  }
+};
+
+// Verify Email
+const verifyEmail = async (req, res, next) => {
+  try {
+    const verificationToken = req.query.token;
+    const userTokenExist = await Verification.findOne({ where: { token: verificationToken }, include: ['user'] });
+
+    if (!userTokenExist) {
+      throw new ResponseError(401, 'YOUR_VERIFICATION_LINK_MIGHT_EXPIRED_PLEASE_CLICK_ON_RESEND_FOR_VERIFY_YOUR_EMAIL');
+    }
+    if (userTokenExist.user.is_verified) {
+      await Verification.destroy({ where: { token: verificationToken } });
+      return res.status(200).json({ message: 'YOUR_EMAIL_HAS_BEEN_ALREADY_VERIFIED, PLEASE_LOGIN_TO_CONINUE' });
+    }
+
+    // set user is_verified to true;
+    userTokenExist.user.is_verified = true;
+    await userTokenExist.user.save();
+    return res.status(200).json({ message: 'YOUR_EMAIL_HAS_BEEN_VERIFIED' });
   } catch (error) {
     next(error);
   }
@@ -75,8 +117,9 @@ const login = async (req, res, next) => {
       },
       JWT_SECRET_KEY,
       {
-        expiresIn: '1h',
+        expiresIn: '30d',
       },
+      { algorithm: 'HS256' },
     );
 
     return res.json({
@@ -104,7 +147,7 @@ const myProfile = (req, res) => {
 const updateProfile = async (req, res, next) => {
   const currentUser = req.user;
 
-  try {  
+  try {
     const {
       fullName, email, phone_number,
     } = req.body;
@@ -114,22 +157,23 @@ const updateProfile = async (req, res, next) => {
       email,
       phone_number,
     }, {
-      where: {id: currentUser.id},
+      where: { id: currentUser.id },
       returning: true,
     });
-  
-  return res.status(200).json({
-    message: 'USER_PROFILE_UPDATED',
-    data: dataUser 
-  })
+
+    return res.status(200).json({
+      message: 'USER_PROFILE_UPDATED',
+      data: dataUser,
+    });
   } catch (error) {
     next(error);
   }
-}
+};
 
 module.exports = {
   register,
   login,
   myProfile,
   updateProfile,
+  verifyEmail,
 };
