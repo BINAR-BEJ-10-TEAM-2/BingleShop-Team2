@@ -10,10 +10,16 @@ passport.use(
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       secretOrKey: JWT_SECRET_KEY,
     },
-    (payload, done) => {
-      User.findByPk(payload.id)
-        .then((user) => done(null, user))
-        .catch((err) => done(err, false));
+    async (payload, done) => {
+      try {
+        const user = await User.findByPk(payload.id);
+        if (!user.is_verified) {
+          return done(new Error('USER_NOT_VERIFIED_PLEASE_CONTACT_CUSTOMER_SUPPORT'), false);
+        }
+        return done(null, user);
+      } catch (err) {
+        return done(err, false);
+      }
     },
   ),
 );
