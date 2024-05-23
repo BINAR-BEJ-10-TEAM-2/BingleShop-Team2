@@ -70,7 +70,7 @@ const verifyEmail = async (req, res, next) => {
     }
     if (userTokenExist.user.is_verified) {
       await Verification.destroy({ where: { token: verificationToken } });
-      return res.status(200).json({ message: 'YOUR_EMAIL_HAS_BEEN_ALREADY_VERIFIED, PLEASE_LOGIN_TO_CONINUE' });
+      return res.status(200).json({ message: 'YOUR_EMAIL_HAS_BEEN_VERIFIED, PLEASE_LOGIN_TO_CONTINUE' });
     }
 
     // set user is_verified to true;
