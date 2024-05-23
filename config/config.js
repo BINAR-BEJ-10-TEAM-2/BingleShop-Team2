@@ -1,5 +1,5 @@
 require('dotenv').config();
-const fs = require('fs')
+const fs = require('fs');
 
 module.exports = {
   development: {
@@ -18,19 +18,19 @@ module.exports = {
     logging: false,
   },
   production: {
-    username: process.env.DB_USER,
-    password: process.env.DB_PASS,
-    database: process.env.DB_NAME,
-    host: process.env.DB_HOST,
-    port: process.env.DB_PORT,
-    "dialect": "postgresql",
+    username: process.env.DB_USERNAME_PROD,
+    password: process.env.DB_PASS_PROD,
+    database: process.env.DB_NAME_PROD,
+    host: process.env.DB_HOST_PROD,
+    port: process.env.DB_PORT_PROD,
+    dialect: 'postgresql',
     dialectModule: require('pg'),
     dialectOptions: {
       ssl: {
         require: true,
         rejectUnauthorized: true,
-        ca: fs.readFileSync(__dirname + '/root.crt').toString(),
-      }
-    }
+        ca: fs.readFileSync(`${__dirname}/root.crt`).toString(),
+      },
+    },
   },
 };
