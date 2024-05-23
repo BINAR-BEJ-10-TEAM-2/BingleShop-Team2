@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify Your Email</title>
+</head>
+<body>
+    <h4>Confirm Your Email Address</h4>
+    <p>Hello, {{fullName}}</p>
+    <p>Please verify your Bingleshop email by clicking this link:</p>
+    <br>
+    <a href="{{verificationLink}}">
+        <button style="background-color: #933393; color: white; font-weight: bold; border: none; padding: 10px 20px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 9px;">
+            Verify Your Email
+        </button>
+    </a>
+    <br>
+    <br>
+    <p>If the link doesn't work, copy and paste the following link in your browser.</p>
+    <p><a href="{{verificationLink}}">{{verificationLink}}</a></p>
+</body>
+</html>

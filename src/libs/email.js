@@ -1,15 +1,17 @@
 const nodemailer = require('nodemailer');
+const fs = require('fs');
+const path = require('path');
 
 const { EMAIL_ADDRESS, EMAIL_PASSWORD } = process.env;
 const sendingMail = async ({
-  from, to, subject, text, next,
+  from, to, subject, html, next,
 }) => {
   try {
     const mailOptions = ({
       from,
       to,
       subject,
-      text,
+      html,
     });
 
     //create a transporter
@@ -30,15 +32,22 @@ const sendingMail = async ({
 
 const sendVerificationEmail = async (user, token, next) => {
   const { email, fullName } = user;
-
+  const templateEmailPath = path.join(__dirname, 'email-template', 'email.html');
   try {
+    const emailTemplate = fs.readFileSync(templateEmailPath, 'utf8');
+    const verificationLink = `http://localhost:3000/api/users/verify-email/activation?token=${token}`;
+    const htmlContent = emailTemplate
+      .replace(/{{fullName}}/g, fullName)
+      .replace(/{{verificationLink}}/g, verificationLink);
+
     await sendingMail({
       from: 'no-reply@bingleshop.com',
       to: email,
       subject: 'Verify Your Email',
-      text: `Hello, ${fullName},
-      Please verify your bingleshop email by clicking this link:
-      http://localhost:3000/api/users/verify-email/activation?token=${token}`,
+      html: htmlContent,
+      // text: `Hello, ${fullName},
+      // Please verify your bingleshop email by clicking this link:
+      // http://localhost:3000/api/users/verify-email/activation?token=${token}`,
       next,
     });
   } catch (error) {
