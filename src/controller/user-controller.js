@@ -32,7 +32,7 @@ const register = async (req, res, next) => {
       is_verified,
     });
 
-    const generateToken = jwt.sign({ id: user.id }, JWT_SECRET_KEY, { expiresIn: '30m' }, { algorithm: 'HS256' });
+    const generateToken = jwt.sign({ id: user.id }, JWT_SECRET_KEY, { expiresIn: '1d' }, { algorithm: 'HS256' });
 
     if (user) {
       const setToken = await Verification.create({ user_id: user.id, token: generateToken });
@@ -66,18 +66,24 @@ const verifyEmail = async (req, res, next) => {
     const userTokenExist = await Verification.findOne({ where: { token: verificationToken }, include: ['user'] });
 
     if (!userTokenExist) {
-      throw new ResponseError(401, 'YOUR_VERIFICATION_LINK_MIGHT_EXPIRED_PLEASE_CLICK_ON_RESEND_FOR_VERIFY_YOUR_EMAIL');
-    }
-    if (userTokenExist.user.is_verified) {
-      await Verification.destroy({ where: { token: verificationToken } });
-      return res.status(200).json({ message: 'YOUR_EMAIL_HAS_BEEN_VERIFIED, PLEASE_LOGIN_TO_CONTINUE' });
+      // handles the case where the token is invalid or already used
+      throw new ResponseError(401, 'YOUR_VERIFICATION_LINK_MIGHT_EXPIRED');
     }
 
-    // set user is_verified to true;
+    const isUserVerified = userTokenExist.user.is_verified;
+
+    if (isUserVerified) {
+      await Verification.update({ token: '' }, { where: { token: verificationToken } });
+      return res.status(200).json({ message: 'YOUR_EMAIL_HAS_BEEN_VERIFIED, PLEASE_LOGIN_TO_CONTINUE' });
+    }
     userTokenExist.user.is_verified = true;
     await userTokenExist.user.save();
+    await Verification.update({ token: '' }, { where: { token: verificationToken } });
     return res.status(200).json({ message: 'YOUR_EMAIL_HAS_BEEN_VERIFIED' });
   } catch (error) {
+    if (error instanceof ResponseError) {
+      return res.status(error.status || 500).json({ message: error.message });
+    }
     next(error);
   }
 };
