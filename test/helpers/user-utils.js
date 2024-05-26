@@ -36,7 +36,7 @@ const getTestUser = async () => await User.findOne();
 
 const updateProfileDummy = {
   fullName: 'User Error',
-  email: 'userbohongan@binar.com',
+  password: '12345678',
   phone_number: '081122223333'
 }
 

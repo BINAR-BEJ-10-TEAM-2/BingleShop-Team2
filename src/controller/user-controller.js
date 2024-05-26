@@ -135,8 +135,6 @@ const login = async (req, res, next) => {
 const myProfile = (req, res) => {
   const currentUser = req.user;
 
-  //console.log(currentUser.id);
-
   return res.json({
     fullName: currentUser.fullName,
     email: currentUser.email,
@@ -149,12 +147,12 @@ const updateProfile = async (req, res, next) => {
 
   try {
     const {
-      fullName, email, phone_number,
+      fullName, password, phone_number,
     } = req.body;
 
     const dataUser = await User.update({
       fullName,
-      email,
+      password : bcrypt.hashSync(password, 10),
       phone_number,
     }, {
       where: { id: currentUser.id },
