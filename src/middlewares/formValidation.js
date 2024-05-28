@@ -14,41 +14,35 @@ const schemaRegister = {
     fullName : {
         type: 'string',
         min: 5,
-        max: 255,
-        required: true
+        max: 255
     },
     email : {
         type: 'email',
-        required: true,
     },
     password : {
         type: 'string',
         min: 8,
-        max: 255,
-        required: true
+        max: 255
     },
     phone_number : {
         type: 'string',
         min: 10,
-        max: 13,
-        required: true
+        max: 13
     },
     is_admin: {
         type: 'boolean',
-        required: false
+        optional: true
     }
 }
 
 const schemaLogin = {
     email : {
         type: 'email',
-        required: true,
     },
     password : {
         type: 'string',
         min: 8,
-        max: 255,
-        required: true
+        max: 255
     }
 }
 
@@ -57,23 +51,69 @@ const schemaUpdateProfile = {
         type: 'string',
         min: 5,
         max: 255,
-        required: true
+        optional: true
     },
     password : {
         type: 'string',
         min: 8,
         max: 255,
-        required: true
+        optional: true
     },
     phone_number : {
         type: 'string',
         min: 10,
         max: 13,
-        required: true
+        optional: true
     },
 }
 
-const validateRegister = async (req, res, next) => {
+const schemaCreateItem = {
+    item_name: {
+        type: 'string',
+        min: 5,
+        max: 255,
+    },
+    price: {
+        type: 'number',
+        min: 1,
+    },
+    stock: {
+        type: 'number',
+        min: 1,
+    },
+    description: {
+        type: 'string',
+        min: 10,
+        max: 255,
+    },
+}
+
+const schemaUpdateItem = {
+    item_name: {
+        type: 'string',
+        min: 5,
+        max: 255,
+        optional: true,
+    },
+    price: {
+        type: 'number',
+        min: 1,
+        optional: true,
+    },
+    stock: {
+        type: 'number',
+        min: 1,
+        optional: true,
+    },
+    description: {
+        type: 'string',
+        min: 10,
+        max: 255,
+        optional: true,
+    },
+}
+
+const userRegister = async (req, res, next) => {
     const errors = await validate(schemaRegister, req.body);
 
     if (errors.length) {
@@ -82,7 +122,7 @@ const validateRegister = async (req, res, next) => {
     next();
 }
 
-const validateLogin= async (req, res, next) => {
+const userLogin= async (req, res, next) => {
     const errors = await validate(schemaLogin, req.body);
 
     if (errors.length) {
@@ -91,7 +131,7 @@ const validateLogin= async (req, res, next) => {
     next();
 }
 
-const validateProfile= async (req, res, next) => {
+const userProfile= async (req, res, next) => {
     const errors = await validate(schemaUpdateProfile, req.body);
 
     if (errors.length) {
@@ -100,8 +140,48 @@ const validateProfile= async (req, res, next) => {
     next();
 }
 
+const itemCreate = async (req, res, next) => {
+    const data = {
+        item_name: req.body.item_name,
+        price: parseInt(req.body.price),
+        stock: parseInt(req.body.stock),
+        image_url: req.body.item_image,
+        description: req.body.description
+    }
+    const errors = await validate(schemaCreateItem, data);
+
+    if (errors.length) {
+        return res.status(400).json({ errors });
+    }
+    next();
+}
+
+const itemUpdate = async (req, res, next) => {
+    const data = req.body;
+    if (data.price != null || data.stock != null ) {
+        data.price = parseInt(req.body.price);
+        data.stock = parseInt(req.body.stock);
+
+        const errors = await validate(schemaUpdateItem, data);
+
+        if (errors.length) {
+            return res.status(400).json({ errors });
+        }
+        next();
+    } else {
+        const errors = await validate(schemaUpdateItem, data);
+
+        if (errors.length) {
+            return res.status(400).json({ errors });
+        }
+        next();
+    }
+}
+
 module.exports = {
-    validateRegister,
-    validateLogin,
-    validateProfile
+    userRegister,
+    userLogin,
+    userProfile,
+    itemCreate,
+    itemUpdate
 }

@@ -1,11 +1,11 @@
 const userRouter = require('express').Router();
 const userController = require('../controller/user-controller');
-const { isAuthenticated, v } = require('../middlewares');
+const { isAuthenticated, validateRequest } = require('../middlewares');
 
-userRouter.post('/register', v.validateRegister ,userController.register);
-userRouter.post('/login', v.validateLogin ,userController.login);
+userRouter.post('/register', validateRequest.userRegister ,userController.register);
+userRouter.post('/login', validateRequest.userLogin ,userController.login);
 userRouter.get('/verify-email/activation', userController.verifyEmail);
 userRouter.get('/my-profile', isAuthenticated, userController.myProfile);
-userRouter.put('/update-profile', v.validateProfile ,isAuthenticated, userController.updateProfile);
+userRouter.put('/update-profile', validateRequest.userProfile ,isAuthenticated, userController.updateProfile);
 
 module.exports = userRouter;
