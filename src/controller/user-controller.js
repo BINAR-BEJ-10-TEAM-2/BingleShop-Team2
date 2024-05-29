@@ -38,7 +38,7 @@ const register = async (req, res, next) => {
       const setToken = await Verification.create({ user_id: user.id, token: generateToken });
 
       if (setToken) {
-        await sendVerificationEmail(user, setToken.token, next);
+        // await sendVerificationEmail(user, setToken.token, next);
       } else {
         throw new ResponseError(400, 'TOKEN_NOT_GENERATED');
       }
@@ -158,7 +158,7 @@ const updateProfile = async (req, res, next) => {
 
     const dataUser = await User.update({
       fullName,
-      password : bcrypt.hashSync(password, 10),
+      password: bcrypt.hashSync(password, 10),
       phone_number,
     }, {
       where: { id: currentUser.id },
