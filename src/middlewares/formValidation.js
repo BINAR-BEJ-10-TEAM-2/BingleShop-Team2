@@ -1,7 +1,6 @@
-const validator = require('fastest-validator');
-const { ResponseError } = require('../error/response-error');
+const Validator = require('fastest-validator');
 
-const v = new validator();
+const v = new Validator();
 
 const validate = (schema, request) =>{
     const check = v.compile(schema);
@@ -76,10 +75,12 @@ const schemaCreateItem = {
     price: {
         type: 'number',
         min: 1,
+        convert: true,
     },
     stock: {
         type: 'number',
         min: 1,
+        convert: true,
     },
     description: {
         type: 'string',
@@ -98,11 +99,13 @@ const schemaUpdateItem = {
     price: {
         type: 'number',
         min: 1,
+        convert: true,
         optional: true,
     },
     stock: {
         type: 'number',
         min: 1,
+        convert: true,
         optional: true,
     },
     description: {
@@ -111,6 +114,26 @@ const schemaUpdateItem = {
         max: 255,
         optional: true,
     },
+}
+
+const schemaCreateOrder = {
+    items: { 
+        type: "array", 
+        min: 1, 
+        items: {
+            type: "object",
+            props: {
+                id: 'number|positive',
+                quantity: 'number|positive|min:1',
+            }
+        } 
+    },
+    order: {
+        type: 'object',
+        props: {
+            address_to: 'string|min:25'
+        }
+    }
 }
 
 const userRegister = async (req, res, next) => {
@@ -141,14 +164,7 @@ const userProfile= async (req, res, next) => {
 }
 
 const itemCreate = async (req, res, next) => {
-    const data = {
-        item_name: req.body.item_name,
-        price: parseInt(req.body.price),
-        stock: parseInt(req.body.stock),
-        image_url: req.body.item_image,
-        description: req.body.description
-    }
-    const errors = await validate(schemaCreateItem, data);
+    const errors = await validate(schemaCreateItem, req.body);
 
     if (errors.length) {
         return res.status(400).json({ errors });
@@ -157,25 +173,21 @@ const itemCreate = async (req, res, next) => {
 }
 
 const itemUpdate = async (req, res, next) => {
-    const data = req.body;
-    if (data.price != null || data.stock != null ) {
-        data.price = parseInt(req.body.price);
-        data.stock = parseInt(req.body.stock);
-
-        const errors = await validate(schemaUpdateItem, data);
+    const errors = await validate(schemaUpdateItem, req.body);
 
         if (errors.length) {
             return res.status(400).json({ errors });
         }
         next();
-    } else {
-        const errors = await validate(schemaUpdateItem, data);
+}
+
+const createOrder = async (req, res, next) => {
+    const errors = await validate(schemaCreateOrder, req.body);
 
         if (errors.length) {
             return res.status(400).json({ errors });
         }
         next();
-    }
 }
 
 module.exports = {
@@ -183,5 +195,6 @@ module.exports = {
     userLogin,
     userProfile,
     itemCreate,
-    itemUpdate
+    itemUpdate,
+    createOrder
 }
