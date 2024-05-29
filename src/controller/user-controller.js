@@ -158,7 +158,7 @@ const updateProfile = async (req, res, next) => {
 
     const dataUser = await User.update({
       fullName,
-      password : bcrypt.hashSync(password, 10),
+      password: bcrypt.hashSync(password, 10),
       phone_number,
     }, {
       where: { id: currentUser.id },

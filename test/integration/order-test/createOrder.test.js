@@ -28,7 +28,7 @@ describe('POST /api/orders/create-order', () => {
       .send({
         order: {
           user_id: testUser.id,
-          address_to: 'Jl. Gatot Subroto',
+          address_to: 'Jl. Gatot Subroto Bintang Delima Pinokio',
           total_order_price: 20000,
         },
         items: [
@@ -53,7 +53,7 @@ describe('POST /api/orders/create-order', () => {
       .send({
         order: {
           user_id: testUser.id,
-          address_to: 'Jl. Gatot Subroto',
+          address_to: 'Jl. Gatot Subroto Bintang Delima Pinokio',
           total_order_price: 20000,
         },
         items: [
@@ -79,7 +79,7 @@ describe('POST /api/orders/create-order', () => {
       .send({
         order: {
           user_id: testUser.id,
-          address_to: 'Jl. Gatot Subroto',
+          address_to: 'Jl. Gatot Subroto Bintang Delima Pinokio',
           total_order_price: 20000,
         },
         items: [
@@ -105,7 +105,7 @@ describe('POST /api/orders/create-order', () => {
       .send({
         order: {
           user_id: testUser.id,
-          address_to: 'Jl. Bersamanya',
+          address_to: 'Jl. Gatot Subroto Bintang Delima Pinokio',
           total_order_price: 20000,
         },
         items: [
