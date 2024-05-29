@@ -37,7 +37,9 @@ const getTestUser = async () => await User.findOne();
 const updateProfileDummy = {
   fullName: 'User Error',
   password: '12345678',
-  phone_number: '081122223333'
-}
+  phone_number: '081122223333',
+};
 
-module.exports = { createTestUser, createTestUserAdmin, getTestUser, updateProfileDummy };
+module.exports = {
+  createTestUser, createTestUserAdmin, getTestUser, updateProfileDummy,
+};
