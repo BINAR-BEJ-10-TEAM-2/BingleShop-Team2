@@ -131,7 +131,7 @@ const schemaCreateOrder = {
     order: {
         type: 'object',
         props: {
-            address_to: 'string|min:30'
+            address_to: 'string|min:25'
         }
     }
 }
@@ -181,10 +181,20 @@ const itemUpdate = async (req, res, next) => {
         next();
 }
 
+const createOrder = async (req, res, next) => {
+    const errors = await validate(schemaCreateOrder, req.body);
+
+        if (errors.length) {
+            return res.status(400).json({ errors });
+        }
+        next();
+}
+
 module.exports = {
     userRegister,
     userLogin,
     userProfile,
     itemCreate,
-    itemUpdate
+    itemUpdate,
+    createOrder
 }
