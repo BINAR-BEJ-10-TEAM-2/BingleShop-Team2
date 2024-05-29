@@ -2,32 +2,32 @@ const { Item } = require('../models');
 const { ResponseError } = require('../error/response-error');
 const { uploadToCloudinary } = require('../libs/cloudinary');
 
-const createItem = async (req, res) => {
+const createItem = async (req, res, next) => {
   try {
     const {
       item_name, price, stock, description,
     } = req.body;
-    const image_url = await uploadToCloudinary(req.file.buffer);
 
-    const item = new Item({
+    const image_url = process.env.NODE_ENV !== 'test' ? await uploadToCloudinary(req.file.buffer) : null;
+
+    const result = await Item.create({
       item_name,
       price,
       stock,
       image_url,
       description,
     });
-    const result = await item.save();
 
     return res.status(201).json({
       message: 'ITEM_CREATED',
       data: { result },
     });
   } catch (error) {
-    return res.status(400).json({ message: error.message });
+    return next(error);
   }
 };
 
-const getItem = async (req, res) => {
+const getItem = async (req, res, next) => {
   try {
     const items = await Item.findAll();
 
@@ -36,7 +36,7 @@ const getItem = async (req, res) => {
       data: { items },
     });
   } catch (error) {
-    return res.status(400).json({ message: error.message });
+    return next(error);
   }
 };
 
