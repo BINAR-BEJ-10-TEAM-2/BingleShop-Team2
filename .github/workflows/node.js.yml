@@ -3,11 +3,8 @@
 
 name: Node.js CI
 env:
-  # VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-  # VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-  VERCEL_ORG_ID: team_1mqoR6IHV5Q64Fosn71k8fub
-  VERCEL_PROJECT_ID: prj_HeZ4932KsQhn0nr6TLzHdNAC8h29
-  VERCEL_TOKEN: fDbDK1xkmA9HZIo5pKMQvfzK
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
 
 on:
   push:
