@@ -6,6 +6,6 @@ userRouter.post('/register', validateRequest.userRegister ,userController.regist
 userRouter.post('/login', validateRequest.userLogin ,userController.login);
 userRouter.get('/verify-email/activation', userController.verifyEmail);
 userRouter.get('/my-profile', isAuthenticated, userController.myProfile);
-userRouter.put('/update-profile', validateRequest.userProfile ,isAuthenticated, userController.updateProfile);
+userRouter.put('/update-profile', isAuthenticated, validateRequest.userProfile, userController.updateProfile);
 
 module.exports = userRouter;
