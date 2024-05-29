@@ -74,7 +74,7 @@ const updateItem = async (req, res, next) => {
   }
 };
 
-const getItemById = async (req, res) => {
+const getItemById = async (req, res, next) => {
   try {
     const { itemId } = req.params;
     const itemFound = await Item.findByPk(itemId);
@@ -86,7 +86,7 @@ const getItemById = async (req, res) => {
       data: { itemFound },
     });
   } catch (error) {
-    return res.status(400).json({ message: error.message });
+    return next(error);
   }
 };
 
