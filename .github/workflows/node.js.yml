@@ -64,6 +64,7 @@ jobs:
         POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
         POSTGRES_HOST: ${{ vars.POSTGRES_HOST }}
         POSTGRES_DB: ${{ vars.POSTGRES_DB }}
+        JWT_SECRET_KEY: ${{ secrets.JWT_SECRET_KEY }}
   
   deploy-vercel:
     runs-on: ubuntu-latest
