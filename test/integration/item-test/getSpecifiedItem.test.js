@@ -12,7 +12,7 @@ const {
 } = require('../../helpers/item-utils');
 const database = require('../../helpers/database');
 
-describe('POST /api/items/admin/specified-item/:itemId', () => {
+describe('POST /api/items/specified-item/:itemId', () => {
   beforeEach(async () => {
     await database.cleanup();
     await createTestItem();
@@ -22,7 +22,7 @@ describe('POST /api/items/admin/specified-item/:itemId', () => {
     const token = await createTestUserAdmin();
 
     const response = await supertest(app)
-      .get('/api/items/admin/specified-item/1')
+      .get('/api/items/specified-item/1')
       .set('Authorization', `Bearer ${token}`);
 
     expect(response.status).toBe(200);
