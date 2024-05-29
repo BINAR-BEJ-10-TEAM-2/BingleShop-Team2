@@ -35,10 +35,15 @@ const register = async (req, res, next) => {
     const generateToken = jwt.sign({ id: user.id }, JWT_SECRET_KEY, { expiresIn: '1d' }, { algorithm: 'HS256' });
 
     if (user) {
-      const setToken = await Verification.create({ user_id: user.id, token: generateToken });
+      const verificationToken = await Verification.create({
+        user_id: user.id,
+        token: generateToken,
+      });
 
-      if (setToken) {
-        await sendVerificationEmail(user, setToken.token, next);
+      if (verificationToken) {
+        if (process.env.NODE_ENV !== 'test') {
+          sendVerificationEmail(user, verificationToken.token, next);
+        }
       } else {
         throw new ResponseError(400, 'TOKEN_NOT_GENERATED');
       }
