@@ -1,0 +1,23 @@
+get:
+  tags:
+    - Orders
+  summary: Get Data Order
+  description: Get existing data order
+  responses:
+    '200':
+      description: ''
+      content:
+        application/json:
+          schema:
+            properties:
+              status:
+                type: string
+                example: success
+              data:
+                type: array
+                items:
+                $ref: '../../components/schemas/orders.yaml'
+  security:
+    - BingleShopAuth:
+        - write:users
+        - read:users
