@@ -1,5 +1,5 @@
 type: object
-title: items
+title: Items
 properties:
   id:
     type: integer

@@ -5,22 +5,40 @@ info:
   description: ''
   version: ''
 servers:
-  - url: http://localhost:3002/api/
+  - url: http://localhost:3000/api
 paths:
-  /api/users/register:
+# AUTH
+  /users/register:
     $ref: './path/users/register.yaml'
-  /api/users/login:
+  /users/login: 
     $ref: './path/users/login.yaml'
-  /api/users/my-profile:
-    $ref: './path/users/get-user.yaml'
-  /api/users/update:
-    $ref: './path/users/update-user.yaml'
-  /v2/orders:
-    $ref: './path/orders/create-get-order.yaml'
-  /v2/orders/{orderId}:
+  /users/verify-email/activation?token={token}:
+    $ref: './path/users/verify-email.yaml'
+# USERS
+  /users/my-profile:
+    $ref: './path/users/my-profile.yaml'
+  /users/update-profile:
+    $ref: './path/users/update-profile.yaml'
+# ITEMS
+  /items/list:
+    $ref: './path/items/get-all-item.yaml'
+  /items/specified-item/{itemId}:
+    $ref: './path/items/get-specified-item.yaml'
+  /items/admin/add-item:
+    $ref: './path/items/add-item.yaml'
+  /items/admin/update-item/{itemId}:
+    $ref: './path/items/update-item.yaml'
+  /items/admin/delete-item/{itemId}:
+    $ref: './path/items/delete-item.yaml'
+# ORDERS
+  /orders/create-order:
+    $ref: './path/orders/create-order.yaml'
+  /orders/order-list:
+    $ref: './path/orders/get-user-order.yaml'
+  /orders/order-list/{orderId}:
+    $ref: './path/orders/get-specified-order.yaml'
+  /orders/{orderId}/completed:
     $ref: './path/orders/update-order.yaml'
-  /v2/items/{itemId}:
-    $ref: './path/items/update-delete-item.yaml'
-  /api/items:
-    $ref: './path/items/get-and-create-item.yaml'
+  /orders/admin/order-list:
+    $ref: './path/orders/get-all-order.yaml'
 
