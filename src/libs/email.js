@@ -2,7 +2,7 @@ const nodemailer = require('nodemailer');
 const fs = require('fs');
 const path = require('path');
 
-const { EMAIL_ADDRESS, EMAIL_PASSWORD } = process.env;
+const { EMAIL_ADDRESS, EMAIL_PASSWORD, HOST_PROD } = process.env;
 const sendingMail = async ({
   from, to, subject, html, next,
 }) => {
@@ -35,7 +35,7 @@ const sendVerificationEmail = async (user, token, next) => {
   const templateEmailPath = path.join(__dirname, 'email-template', 'email.html');
   try {
     const emailTemplate = fs.readFileSync(templateEmailPath, 'utf8');
-    const verificationLink = `http://localhost:3000/api/users/verify-email/activation?token=${token}`;
+    const verificationLink = `${HOST_PROD}/api/users/verify-email/activation?token=${token}`;
     const htmlContent = emailTemplate
       .replace(/{{fullName}}/g, fullName)
       .replace(/{{verificationLink}}/g, verificationLink);
@@ -45,9 +45,6 @@ const sendVerificationEmail = async (user, token, next) => {
       to: email,
       subject: 'Verify Your Email',
       html: htmlContent,
-      // text: `Hello, ${fullName},
-      // Please verify your bingleshop email by clicking this link:
-      // http://localhost:3000/api/users/verify-email/activation?token=${token}`,
       next,
     });
   } catch (error) {
