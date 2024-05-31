@@ -8,7 +8,9 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../../components/schemas/orders.yaml'
+            anyOf:
+              - $ref: '../../components/schemas/orders.yaml'
+              - $ref: '../../components/schemas/order-item.yaml'
           examples:
             javascript:
               description: Successfully listed all orders 

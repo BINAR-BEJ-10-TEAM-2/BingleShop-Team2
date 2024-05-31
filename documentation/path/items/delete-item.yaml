@@ -15,6 +15,14 @@ delete:
   responses:
       '200':
           description: ITEM_DELETED
+          content:
+            application/json:
+              schema:
+                $ref: '../../components/schemas/items.yaml'
+              examples:
+                javascript:
+                  value:
+                    message: ITEM_DELETED
       '400':
         description: Invalid input
       '401':
