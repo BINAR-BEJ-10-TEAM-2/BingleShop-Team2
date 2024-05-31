@@ -2,7 +2,7 @@ put:
   tags:
     - Items
   summary: Update Data Item
-  description: Update Existing Data Item
+  description: Update Specified Item by Id
   parameters:
     - in: path
       name: itemId
@@ -16,29 +16,35 @@ put:
     content:
       application/json:
         schema:
-          $ref: '../../components/schemas/items.yaml'
+          "$ref": "../../components/schemas/items.yaml"
+        examples:
+          javascript:
+            description: Example request update data Item
+            value:
+              item_name: Some Item Name
+              stock: 1
+              price: 2000   
   responses:
     '200':
-      description: Success Update Item
+      description: ITEM_UPDATED
       content:
         application/json:
           schema:
-            $ref: '../../components/schemas/items.yaml'
+            "$ref": "../../components/schemas/items.yaml"
+          examples:
+            javascript:
+              description: Successfully update item data
+              value:
+                id: 1
+                item_name: Some Item Name
+                stock: 1
+                price: 2000
+                image_url: https://res.cloudinary.com/xxx
+                description: Lorem psum eu ultrices vitae auctor eu
     '400':
-      description: Client Error
-      content:
-        application/json:
-          schema:
-            properties:
-              success:
-                type: boolean
-                example: false
-              data:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    example: Invalid request payload
+      description: Invalid input
+    '404':
+      description: ITEM_NOT_FOUND
   security:
     - BingleShopAuth:
         - write:admin

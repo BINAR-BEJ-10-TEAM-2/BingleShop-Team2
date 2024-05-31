@@ -51,7 +51,7 @@ const register = async (req, res, next) => {
       return res.json({
         message: 'USER_CREATED',
         data: {
-          fullname: user.fullName,
+          fullName: user.fullName,
           email: user.email,
           password: user.password,
           phone_number: user.phone_number,
