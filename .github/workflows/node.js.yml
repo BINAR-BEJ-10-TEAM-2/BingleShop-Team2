@@ -81,26 +81,51 @@ jobs:
         run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
 
   # this is the deployment sample for VPS or compute engine instance
-  # deploy:
-  #   runs-on: ubuntu-latest
-  #   needs: build
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #     - name: Upload to VM
-  #       uses: appleboy/scp-action@v0.1.4
-  #       with:
-  #         host: ${{ secrets.SSHHOST }}
-  #         username: ${{ secrets.SSHUSER }}
-  #         key: ${{ secrets.SSHKEY }}
-  #         port: ${{ secrets.SSHPORT }}
-  #         source: '.'
-  #         target: ./latihan-cicd/
-  #     - name: restart pm2 services
-  #       uses: appleboy/ssh-action@v1.0.0
-  #       with:
-  #         host: ${{ secrets.SSHHOST }}
-  #         username: ${{ secrets.SSHUSER }}
-  #         key: ${{ secrets.SSHKEY }}
-  #         port: ${{ secrets.SSHPORT }}
-  #         script: |
-  #           pm2 restart all
+  deploy-to-vps:
+    runs-on: ubuntu-latest
+    needs: build-and-test
+    steps:
+      # - name: Use current build artifact
+      #   uses: actions/download-artifact@v3.1.3
+      #   with:
+      #     name: binar-artifact
+
+      - name: Checkout current branch
+        uses: actions/checkout@v2
+
+      - name: Prepare .env file
+        run: |
+          touch .env #bikin file .env ke current directory
+          echo "DB_USERNAME_PROD=${{ secrets.DB_USERNAME_PROD }}" >> .env #menuliskan env beserta isinya, lalu di append ke file .env
+          echo "DB_PASS_PROD=${{ secrets.DB_PASS_PROD }}" >> .env
+          echo "DB_NAME_PROD=${{ secrets.DB_NAME_PROD }}" >> .env
+          echo "DB_HOST_PROD=${{ secrets.DB_HOST_PROD }}" >> .env
+          echo "DB_PORT_PROD=${{ secrets.DB_PORT_PROD }}" >> .env
+          echo "DB_DIALECT_PROD=${{ secrets.DB_DIALECT_PROD }}" >> .env
+          echo "DB_PROD_DIALECT=${{ secrets.DB_PROD_DIALECT }}" >> .env
+          echo "JWT_SECRET_KEY=${{ secrets.JWT_SECRET }}" >> .env
+          echo "CLOUDINARY_URL=${{ secrets.CLOUDINARY_URL }}" >> .env
+          echo "EMAIL_USER=${{ secrets.EMAIL_USER }}" >> .env
+          echo "EMAIL_PASS=${{ secrets.EMAIL_PASS }}" >> .env
+          echo "HOST_PROD==${{ secrets.HOST_PROD }}" >> .env
+
+      - name: Upload to VM
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          source: '.'
+          target: ./bingleshop-team2/BingleShop-Team2
+
+      - name: restart pm2 services
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH-USER }}
+          key: ${{ secrets.SSH-KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            npm install --silent
+            pm2 restart binar-bingle-shop
