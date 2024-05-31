@@ -1,6 +1,6 @@
  get:
       tags:
-      - Items
+        - Items
       summary: Get All Items Data
       description: Get all active items data by default
       responses:
@@ -9,7 +9,7 @@
           content:
             application/json:
               schema:
-                "$ref": "../../components/schemas/items.yaml"
+                $ref: "../../components/schemas/items.yaml"
               examples:
                 javascript::
                   description: Getting all items data

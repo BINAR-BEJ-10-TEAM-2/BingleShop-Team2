@@ -17,6 +17,8 @@ delete:
           description: ITEM_DELETED
       '400':
         description: Invalid input
+      '401':
+        description: Unauthorized
       '404':
         description: ITEM_NOT_FOUND
   security:
