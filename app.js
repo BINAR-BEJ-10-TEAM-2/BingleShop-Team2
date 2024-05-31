@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+const helmet = require('helmet');
 
 const pinoHttp = require('pino-http');
 const routerIndex = require('./src/routes/index-router');
@@ -14,6 +15,8 @@ if (process.env.NODE_ENV !== 'test') {
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+app.use(helmet());
 
 // API ROUTERS
 app.use(routerIndex);
