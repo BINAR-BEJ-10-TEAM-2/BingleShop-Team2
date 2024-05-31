@@ -23,7 +23,7 @@ module.exports = {
     database: process.env.DB_NAME_PROD,
     host: process.env.DB_HOST_PROD,
     port: process.env.DB_PORT_PROD,
-    dialect: 'postgresql',
+    dialect: process.env.DB_DIALECT_PROD,
     dialectModule: require('pg'),
     dialectOptions: {
       ssl: {
