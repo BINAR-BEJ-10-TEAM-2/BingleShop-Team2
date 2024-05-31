@@ -1,0 +1,12 @@
+type: object
+title: items
+properties:
+  id:
+    type: integer
+  item_name:
+    type: string
+  OrderItem:
+    type: object
+    properties:
+      quantity:
+        type: integer

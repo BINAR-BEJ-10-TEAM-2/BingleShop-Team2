@@ -1,8 +1,8 @@
 delete:
   tags:
     - Items
-  summary: Delete Data Item
-  description: Delete Data Item
+  summary: Delete Specified Item by Id
+  description: Delete Item
   parameters:
     - in: path
       name: itemId
@@ -11,28 +11,24 @@ delete:
           type: integer
           format: int64
       description: ID of Item to delete
+      example: 1
   responses:
       '200':
-          description: Item that was deleted
+          description: ITEM_DELETED
           content:
             application/json:
               schema:
                 $ref: '../../components/schemas/items.yaml'
+              examples:
+                javascript:
+                  value:
+                    message: ITEM_DELETED
       '400':
-        description: Client Error
-        content:
-          application/json:
-            schema:
-              properties:
-                success:
-                  type: boolean
-                  example: false
-                data:
-                  type: object
-                  properties:
-                    error:
-                      type: string
-                      example: Invalid request payload
+        description: Invalid input
+      '401':
+        description: Unauthorized
+      '404':
+        description: ITEM_NOT_FOUND
   security:
     - BingleShopAuth:
         - write:admin

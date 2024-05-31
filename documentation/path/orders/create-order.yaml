@@ -8,42 +8,42 @@ post:
     content:
       application/json:
         schema:
-          $ref: '../../components/schemas/orders.yaml'
+          anyOf:
+            - $ref: '../../components/schemas/orders.yaml'
+            - $ref: '../../components/schemas/order-item.yaml'
         examples:
-          Pending:
+          pending:
             description: Create a new Order
             value:
-              address_to: Jakarta
-              quantity: 2
-              status: Pending
+              address_to: Lorem psum eu ultrices vitae auctor eu 
+              items: 
+                - id: 2
+                  quantity: 1
   responses:
     '201':
-      description: Order Created
+      description: ORDER_CREATED
       content:
         application/json:
           schema:
-            $ref: '../../components/schemas/orders.yaml'
+            anyOf:
+              - $ref: '../../components/schemas/orders.yaml'
+              - $ref: '../../components/schemas/order-item.yaml'
           examples:
-            Pending:
-              description: 'Example create order '
+            pending:
+              description: 'Example of created order by user'
               value:
-                address_to: Jl. Arjosari, Jakarta Pusat
-                quantity: 1
-                status: Pending
+                message: ORDER_CREATED
+                data:
+                  order_id: 1
+                  user_id: 1
+                  address_to: Lorem psum eu ultrices vitae auctor eu
+                  total_order_price: 2000
+                  status: pending
+                  items: 
+                  - id: 2
+                    quantity: 1
     '400':
-      content:
-        application/json:
-          schema:
-            properties:
-              success:
-                type: boolean
-                example: false
-              data:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    example: Quantity cannot be 0
+      description: Invalid input 
   security:
     - BingleShopAuth:
         - write:users

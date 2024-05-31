@@ -3,10 +3,12 @@ title: Orders
 properties:
   id:
     type: integer
+  user_id:
+    type: integer
   address_to:
     type: string
     required: true
-  quantity:
+  total_order_price:
     type: integer
     required: true
   status:

@@ -1,22 +1,45 @@
 get:
   tags:
     - Orders
-  summary: Get Data Order
-  description: Get existing data order
+  summary: Get All Order List by Admin
+  description: Get all existing order list by Admin
   responses:
     '200':
-      description: ''
       content:
         application/json:
           schema:
-            properties:
-              status:
-                type: string
-                example: success
-              data:
-                type: array
-                items:
-                $ref: '../../components/schemas/orders.yaml'
+            anyOf:
+              - $ref: '../../components/schemas/orders.yaml'
+              - $ref: '../../components/schemas/order-item.yaml'
+          examples:
+            javascript:
+              description: Successfully listed all orders 
+              value:
+                data:
+                - id: 1
+                  user_id: 1
+                  address_to: Lorem psum eu ultrices vitae auctor eu
+                  total_order_price: 2000
+                  status: completed
+                  items: 
+                  - id: 1
+                    item_name: Lorem psum
+                    OrderItem: 
+                      quantity: 1
+                - id: 2
+                  user_id: 2
+                  address_to: Ultrices vitae auctor euLorem psum eu
+                  total_order_price: 5000
+                  status: pending
+                  items: 
+                  - id: 3
+                    item_name: Lorem psum eu
+                    OrderItem: 
+                      quantity: 2
+    '401':
+      description: Unauthorized
+
+              
   security:
     - BingleShopAuth:
         - write:users
