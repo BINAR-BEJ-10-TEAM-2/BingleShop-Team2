@@ -67,7 +67,7 @@ jobs:
         JWT_SECRET_KEY: ${{ secrets.JWT_SECRET_KEY }}
   
   deploy-vercel:
-    runs-on: ubuntu-latest
+    runs-on: debian-latest
     needs: build-and-test
     steps:
       - uses: actions/checkout@v2
@@ -102,7 +102,7 @@ jobs:
           echo "DB_HOST_PROD=${{ secrets.DB_HOST_PROD }}" >> .env
           echo "DB_PORT_PROD=${{ secrets.DB_PORT_PROD }}" >> .env
           echo "DB_DIALECT_PROD=${{ secrets.DB_DIALECT_PROD }}" >> .env
-          echo "DB_PROD_DIALECT=${{ secrets.DB_PROD_DIALECT }}" >> .env
+          echo "DB_DIALECT_PROD=${{ secrets.DB_DIALECT_PROD }}" >> .env
           echo "JWT_SECRET_KEY=${{ secrets.JWT_SECRET }}" >> .env
           echo "CLOUDINARY_URL=${{ secrets.CLOUDINARY_URL }}" >> .env
           echo "EMAIL_USER=${{ secrets.EMAIL_USER }}" >> .env
