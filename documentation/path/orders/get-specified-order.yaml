@@ -1,0 +1,41 @@
+get:
+  tags:
+    - Orders
+  summary: Get Specified Data Order
+  description: Get specified data order by user
+  parameters:
+    - in: path
+      name: orderId
+      required: true
+      schema:
+          type: integer
+          format: int64
+      description: ID of Order to query
+      example: 1
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            anyOf:
+              - $ref: '../../components/schemas/orders.yaml'
+              - $ref: '../../components/schemas/order-item.yaml'
+          examples:
+            javascript:
+              description: Successfully get specified order 
+              value:
+                data:
+                  id: 1
+                  user_id: 1
+                  address_to: Lorem psum eu ultrices vitae auctor eu
+                  total_order_price: 2000
+                  status: pending
+                  items: 
+                    - id: 1
+                      item_name: Lorem psum
+                      OrderItem: 
+                        quantity: 1
+    '400':
+      description: Invalid input
+    '404':
+      description: ORDER_NOT_FOUND

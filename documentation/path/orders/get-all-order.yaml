@@ -1,8 +1,8 @@
 get:
   tags:
     - Orders
-  summary: Get Data Order
-  description: Get existing data order
+  summary: Get All Order List by Admin
+  description: Get all existing order list by Admin
   responses:
     '200':
       content:
@@ -27,12 +27,12 @@ get:
                     OrderItem: 
                       quantity: 1
                 - id: 2
-                  user_id: 1
-                  address_to: Lorem psum eu ultrices vitae auctor eu
+                  user_id: 2
+                  address_to: Ultrices vitae auctor euLorem psum eu
                   total_order_price: 5000
                   status: pending
                   items: 
-                  - id: 2
+                  - id: 3
                     item_name: Lorem psum eu
                     OrderItem: 
                       quantity: 2
