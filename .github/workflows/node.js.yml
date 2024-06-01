@@ -102,10 +102,10 @@ jobs:
           echo "DB_HOST_PROD=${{ secrets.DB_HOST_PROD }}" >> .env
           echo "DB_PORT_PROD=${{ secrets.DB_PORT_PROD }}" >> .env
           echo "DB_DIALECT_PROD=${{ secrets.DB_DIALECT_PROD }}" >> .env
-          echo "JWT_SECRET_KEY=${{ secrets.JWT_SECRET }}" >> .env
+          echo "JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY }}" >> .env
           echo "CLOUDINARY_URL=${{ secrets.CLOUDINARY_URL }}" >> .env
-          echo "EMAIL_USER=${{ secrets.EMAIL_USER }}" >> .env
-          echo "EMAIL_PASS=${{ secrets.EMAIL_PASS }}" >> .env
+          echo "EMAIL_ADDRESS=${{ secrets.EMAIL_ADDRESS }}" >> .env
+          echo "EMAIL_PASSWORD=${{ secrets.EMAIL_PASSWORD }}" >> .env
           echo "HOST_PROD==${{ secrets.HOST_PROD }}" >> .env
 
       - name: Upload to VM
