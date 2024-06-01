@@ -125,6 +125,7 @@ const login = async (req, res, next) => {
       {
         id: userExist.id,
         email: userExist.email,
+        is_admin: userExist.is_admin,
       },
       JWT_SECRET_KEY,
       {
