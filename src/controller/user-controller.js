@@ -153,6 +153,7 @@ const myProfile = (req, res) => {
   });
 };
 
+//updateProfile
 const updateProfile = async (req, res, next) => {
   const currentUser = req.user;
 

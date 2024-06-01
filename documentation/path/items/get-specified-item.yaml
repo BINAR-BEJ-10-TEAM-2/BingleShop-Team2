@@ -1,0 +1,44 @@
+get:
+  tags:
+    - Items
+  summary: Get Specified Data Item
+  description: Get specified data item by user
+  parameters:
+    - in: path
+      name: itemId
+      required: true
+      schema:
+          type: integer
+          format: int64
+      description: ID of Item to query
+      example: 1
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            $ref: '../../components/schemas/items.yaml'
+          examples:
+            javascript:
+              description: Successfully get specified item 
+              value:
+                data:
+                  id: 1
+                  user_id: 1
+                  items: 
+                    - id: 1
+                      item_name: NutriJon
+                      stock: 30
+                      price: 30000
+                      image_url: https://res.cloudinary.com/xxx
+                      description: Dessert
+                    - id: 2
+                      item_name: Mamak Melon
+                      stock: 15
+                      price: 20000
+                      image_url: https://res.cloudinary.com/xxx
+                      description: Dish Soap
+    '400':
+      description: Invalid input
+    '404':
+      description: ITEM_NOT_FOUND

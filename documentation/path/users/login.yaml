@@ -1,38 +1,38 @@
-    post:
-      tags:
-      - Users
-      summary: Login user
-      description: Try to login user
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
+post:
+  tags:
+    - Users
+  summary: Login user
+  description: Try to login user
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "../../components/schemas/users.yaml"
+        examples:
+          javascipt:
+            description: Login user
+            value:
+              email: budi_cakep@gimail.com
+              password: budi_Sayang_AyahDanIbu
+  responses:
+    "200":
+      description: Successfully Login
+      content:
+        application/json:
+          schema:
             $ref: "../../components/schemas/users.yaml"
-            examples:
-              javascipt:
-                description: Login user
-                value:
-                  email: Adelia_Jaskolski@example.net
-                  password: password
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-              $ref: "../../components/schemas/users.yaml"
-              examples:
-                javascipt:
-                  description: Success login user
-                  value: LOGIN_SUCCESS
-        '400':
-          description: Invalid input
-        '401':
-          $ref: "../../components/responses/UnauthorizedError.yaml" 
-        '422':
-          description: Validation exception
-      security:
-      - BingleShopAuth:
+          examples:
+            javascipt:
+                description: Success login user
+                value: LOGIN_SUCCESS
+    "400":
+      description: Invalid Input
+    "401":
+      $ref: "../../components/responses/UnauthorizedError.yaml"
+    "422":
+      description: Validation exception
+  security:
+    - BingleShopAuth:
         - write:users
         - read:users

@@ -1,48 +1,48 @@
- post:
-      tags:
-      - Items
-      summary: Create a new item data
-      description: Try to create new item data to database
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              "$ref": "../../components/schemas/items.yaml"
-            examples:
-              javascript:
-                description: Example create new item data
-                value:
+post:
+  tags:
+    - Items
+  summary: Create a new item data
+  description: Try to create new item data to database
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "../../components/schemas/items.yaml"
+        examples:
+          javascript:
+            description: Example create new item data
+            value:
+              item_name: "{{$randomItemName}}"
+              stock: "{{$randomStock}}"
+              price: "{{$randomPrice}}"
+              image_url: https://res.cloudinary.com/xxx
+              description: "{{$randomDescription}}"
+  responses:
+    "200":
+      description: Successful Operation
+      content:
+        application/json:
+          schema:
+            $ref: "../../components/schemas/items.yaml"
+          examples:
+            javascript:
+              description: Successfully created new item data
+              value:
+                Success: 1
+                message: ITEM_CREATED
+                data:
+                  id: 3
                   item_name: Black Bean
                   stock: 20
                   price: 30000
                   image_url: https://res.cloudinary.com/xxx
-                  description: Margarin
-      responses:
-        '200':
-          description: Successful Operation
-          content:
-            application/json:
-              schema:
-                "$ref": "../../components/schemas/items.yaml"
-              examples:
-                javascript:
-                  description: Successfully created new item data
-                  value:
-                    Success: 1
-                    message: ITEM_CREATED
-                    data:
-                      id: 3
-                      item_name: Black Bean
-                      stock: 20
-                      price: 30000
-                      image_url: https://res.cloudinary.com/xxx
-                      description: Margarin          
-        '400':
-          description: Invalid input
-        '422':
-          description: Validation exception
-      security:
-      - BingleShopAuth:
+                  description: Margarin          
+    "400":
+      description: Invalid input
+    "422":
+      description: Validation exception
+  security:
+    - BingleShopAuth:
         - write:users
         - read:users
