@@ -82,7 +82,7 @@ jobs:
 
   # this is the deployment sample for VPS or compute engine instance
   deploy-to-vps:
-    runs-on: ubuntu-latest
+    runs-on: debian-latest
     needs: build-and-test
     steps:
       # - name: Use current build artifact
@@ -101,7 +101,6 @@ jobs:
           echo "DB_NAME_PROD=${{ secrets.DB_NAME_PROD }}" >> .env
           echo "DB_HOST_PROD=${{ secrets.DB_HOST_PROD }}" >> .env
           echo "DB_PORT_PROD=${{ secrets.DB_PORT_PROD }}" >> .env
-          echo "DB_DIALECT_PROD=${{ secrets.DB_DIALECT_PROD }}" >> .env
           echo "DB_DIALECT_PROD=${{ secrets.DB_DIALECT_PROD }}" >> .env
           echo "JWT_SECRET_KEY=${{ secrets.JWT_SECRET }}" >> .env
           echo "CLOUDINARY_URL=${{ secrets.CLOUDINARY_URL }}" >> .env

@@ -39,3 +39,7 @@ get:
       description: Invalid input
     '404':
       description: ORDER_NOT_FOUND
+  security:
+    - BingleShopAuth:
+        - write:all
+        - read:all

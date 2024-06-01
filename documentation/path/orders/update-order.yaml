@@ -25,3 +25,8 @@ put:
                 message: ORDER_UPDATED
     '400':
       description: Client Error
+
+  security:
+    - BingleShopAuth:
+       - write:user
+       - read:user

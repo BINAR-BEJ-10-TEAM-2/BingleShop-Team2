@@ -47,5 +47,5 @@ put:
       
   security:
     - BingleShopAuth:
-        - write:admin
-        - read:admin
+        - write:admin,user
+        - read:admin,user

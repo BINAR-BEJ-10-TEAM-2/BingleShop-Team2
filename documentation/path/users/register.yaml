@@ -39,7 +39,4 @@ post:
       description: Invalid input
     "422":
       description: Validation exception
-  security:
-    - BingleShopAuth:
-        - write:users
-        - read:users
+      
