@@ -42,3 +42,7 @@ get:
       description: Invalid input
     '404':
       description: ITEM_NOT_FOUND
+  security:
+    - BingleShopAuth:
+        - write:all
+        - read:all

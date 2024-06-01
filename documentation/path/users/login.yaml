@@ -32,7 +32,4 @@ post:
       $ref: "../../components/responses/UnauthorizedError.yaml"
     "422":
       description: Validation exception
-  security:
-    - BingleShopAuth:
-        - write:users
-        - read:users
+      

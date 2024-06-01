@@ -1,0 +1,35 @@
+put:
+  tags:
+    - Users
+  summary: Verify Email User
+  description: Update verify status of user email
+  parameters:
+    - in: path
+      name: email
+      required: true
+      schema:
+        type: string
+        format: string
+      description: example@mail.com
+      example: https://team-two.binar-project.online/users/verify-email/activation?token={token} 
+  responses:
+      '200':
+        description: Email Successfully verified
+        content:
+          application/json:
+            schema:
+              $ref: '../../components/schemas/users.yaml'
+            examples:
+              example@mail.com:
+                value:
+                  message: YOUR_EMAIL_HAS_BEEN_VERIFIED
+      '401':
+        description: Token doesn't exist or expired
+        content:
+          application/json:
+            schema:
+              $ref: '../../components/schemas/users.yaml'
+            examples:
+              example@mail.com:
+                value:
+                  message: YOUR_VERIFICATION_LINK_MIGHT_EXPIRED

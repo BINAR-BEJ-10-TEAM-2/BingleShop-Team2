@@ -38,3 +38,8 @@ get:
                       quantity: 2
     '400':
       description: Bad Request
+
+  security:
+   - BingleShopAuth:
+        - write:user
+        - read:user
