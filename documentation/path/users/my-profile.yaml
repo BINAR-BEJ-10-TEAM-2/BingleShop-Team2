@@ -15,13 +15,9 @@ get:
               description: Show user data execpt isValidate and isActive status.
               value:
                 user_data:
-                  id : 0
-                  first_name: Farix
-                  last_name: Ikhwanul
-                  email : Judah_Franecki@example.org
-                  password: password
-                  address: Jakarta
-                  phone_number: "082222222222"
+                  fullName: Budi Cakep
+                  email: budi_cakep@gimail.com
+                  phone_number: 0813-1233-1233
     "400":
       description: Bad Request
     '401':

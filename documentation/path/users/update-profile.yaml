@@ -2,7 +2,14 @@ put:
   tags:
     - Users
   summary: Update user profile
-  description: Update user profile
+  description: Update existing user profile
+  parameters:
+    - in: path
+      name: userId
+      required: true
+      schema:
+        type: integer
+        format: int64
   requestBody:
     required: true
     content:
@@ -16,7 +23,6 @@ put:
               fullName: Someone
               email: something@binar.com
               phone_number: "081122223333"
-
   responses:
     "200":
       description: Update Success
@@ -28,7 +34,9 @@ put:
             javascipt:
               description: Updated user data
               value:
+                message: USER_PROFILE_UPDATED
                 user_data:
+                  id: 1
                   fullName: Ikhwanul
                   email : Judah_Franecki@example.org
                   phone_number: "081122223333"
@@ -36,6 +44,7 @@ put:
       description: Bad Request
     "502":
       description: Bad Gateway Error
+      
   security:
     - BingleShopAuth:
         - write:admin

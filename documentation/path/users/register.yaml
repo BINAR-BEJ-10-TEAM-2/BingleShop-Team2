@@ -25,10 +25,16 @@ post:
           schema:
             $ref: "../../components/schemas/users.yaml"
           examples:
-            javascipt:
-              description: Success register user and encrypt password
+            pending:
+              description: ' success to create a new user'
               value:
-                "message": "USER_CREATED"
+                message: USER_CREATED
+                data:
+                  id: 1 
+                  fullName: Budi Cakep
+                  email: budi_cakep@gimail.com
+                  password: budi_Sayang_AyahDanIbu
+                  phone_number: 0813-1233-1233
     "400":
       description: Invalid input
     "422":

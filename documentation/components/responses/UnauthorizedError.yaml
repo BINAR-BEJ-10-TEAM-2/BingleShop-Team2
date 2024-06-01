@@ -1,3 +1,4 @@
+ description: Unauthorized
  responses:
     UnauthorizedError:
       description: Access token is missing or invalid
