@@ -126,5 +126,6 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
+            chmod 700 -R
             npm install --silent
             pm2 restart binar-bingle-shop
