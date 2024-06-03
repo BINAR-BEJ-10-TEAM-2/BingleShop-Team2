@@ -8,8 +8,11 @@ const server = http.createServer(app);
 
 const port = process.env.PORT || 3000;
 
+const isProduction = process.env.NODE_ENV === 'production';
+const baseURL = isProduction ? 'https://team-two.binar-project.online' : `http://localhost:${port}`;
+
 const listener = server.listen(port, () => {
-  logger.info(`Server app listening on http://localhost:${port}`);
+  logger.info(`Server app listening on ${baseURL}`);
 });
 
 const socket = require('./src/controller/socket-controller');
