@@ -1,0 +1,552 @@
+{
+	"info": {
+		"_postman_id": "51695fac-8d3c-4e0c-be90-619b770bc304",
+		"name": "BingleShop",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26320962"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"fullName\" : \"Wiedy\",\n    \"email\": \"wiedytp5@gmail.com\",\n    \"password\": \"123456789\",\n    \"phone_number\" : \"08564782349\",\n    \"is_admin\":false\n   \n\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseurl}}/api/users/register",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"email\": \"wiedytp5@gmail.com\",\n    \"password\": \"123456789\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseurl}}/api/users/login",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Get My Profile",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseurl}}/api/users/my-profile",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"my-profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User Profile",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"fullName\": \"Asep Darmawan\",\n    \"password\": \"\",\n    \"phone_number\": \"090920384\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseurl}}/api/users/update-profile",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"update-profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Verify User Account",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseurl}}/api/users/verify-email/activation?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk3MzIzMTEyOTk3Nzk0NjExMyIsImlhdCI6MTcxNzA3Njk3MCwiZXhwIjoxNzE3MTYzMzcwfQ.nsNQtlLrCSyo6Mo5iIID159RJchnFFoKGAkto2ny7gc",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"verify-email",
+								"activation"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk3MzIzMTEyOTk3Nzk0NjExMyIsImlhdCI6MTcxNzA3Njk3MCwiZXhwIjoxNzE3MTYzMzcwfQ.nsNQtlLrCSyo6Mo5iIID159RJchnFFoKGAkto2ny7gc"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Items",
+			"item": [
+				{
+					"name": "Adding an Item",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiZW1haWwiOiJ1c2VydGVzdDM1QGJpbmFyLmNvbSIsImlhdCI6MTcxNDc0MzYxMiwiZXhwIjoxNzE0NzQ3MjEyfQ.C7Pr6GsyTiRU5-VOFFjB0HlYRn6XjItt1ri71EZdIu8",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "item_name",
+									"value": "Cusson Baby 8",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "35000",
+									"type": "text"
+								},
+								{
+									"key": "stock",
+									"value": "15",
+									"type": "text"
+								},
+								{
+									"key": "item_image",
+									"type": "file",
+									"src": "/home/tpwiedy/Pictures/nodejs.png"
+								},
+								{
+									"key": "description",
+									"value": "ini deskripsi  cusson baby 7",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseurl}}/api/items/admin/add-item",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"items",
+								"admin",
+								"add-item"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Updating an item",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiZW1haWwiOiJ1c2VydGVzdDM1QGJpbmFyLmNvbSIsImlhdCI6MTcxNDc0MzYxMiwiZXhwIjoxNzE0NzQ3MjEyfQ.C7Pr6GsyTiRU5-VOFFjB0HlYRn6XjItt1ri71EZdIu8",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "item_name",
+									"value": "Cusson baby Terbang Form-data 7",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "ini deskripsi pulpen pilot terbang formdata 7",
+									"type": "text"
+								},
+								{
+									"key": "item_image",
+									"type": "file",
+									"src": "/home/tpwiedy/madu de beez_img0.png",
+									"disabled": true
+								},
+								{
+									"key": "price",
+									"value": "3000",
+									"type": "text"
+								},
+								{
+									"key": "stock",
+									"value": "11",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseurl}}/api/items/admin/update-item/9",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"items",
+								"admin",
+								"update-item",
+								"9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Items",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseurl}}/api/items/list",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"items",
+								"list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Specified Item",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseurl}}/api/items/specified-item/9",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"items",
+								"specified-item",
+								"9"
+							],
+							"query": [
+								{
+									"key": "authorization",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Specified Item",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseurl}}/api/items/admin/delete-item/8",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"items",
+								"admin",
+								"delete-item",
+								"8"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Orders",
+			"item": [
+				{
+					"name": "Create Order",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiZW1haWwiOiJ1c2VydGVzdDM1QGJpbmFyLmNvbSIsImlhdCI6MTcxNDgzMjYyMywiZXhwIjoxNzE0ODM2MjIzfQ.B9eSZKcBYD3iESRcgGQwxOl_3TVc6VTnHGmxi2jxduM",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"order\":{\n    \"address_to\": \"Jl. Jalan Bersama Dia Lagi\"\n    },\n    \"items\":[\n        {\n            \"id\":1,\n            \"quantity\":2\n        },\n          {  \n            \"id\":9,\n            \"quantity\":10\n          \n          }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseurl}}/api/orders/create-order",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"orders",
+								"create-order"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Data User Order",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiZW1haWwiOiJ1c2VydGVzdDM1QGJpbmFyLmNvbSIsImlhdCI6MTcxNDgyODk2MCwiZXhwIjoxNzE0ODMyNTYwfQ.LVFqWKFubAVyG7PWxGO9wZ0S4e15tRhv86OdKY5bpZQ",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseurl}}/api/orders/order-list/",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"orders",
+								"order-list",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Data Specified User Order",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseurl}}/api/orders/order-list/14",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"orders",
+								"order-list",
+								"14"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Order",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiZW1haWwiOiJ1c2VydGVzdDM1QGJpbmFyLmNvbSIsImlhdCI6MTcxNDgyNzc0NSwiZXhwIjoxNzE0ODMxMzQ1fQ.eqMxYTDdfxXcNynvHSi2MTPyHTxX2JSNZ-_4bx_CxaA",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseurl}}/api/orders/1/completed",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"orders",
+								"1",
+								"completed"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Order List",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiZW1haWwiOiJ1c2VydGVzdDM1QGJpbmFyLmNvbSIsImlhdCI6MTcxNDgyODk2MCwiZXhwIjoxNzE0ODMyNTYwfQ.LVFqWKFubAVyG7PWxGO9wZ0S4e15tRhv86OdKY5bpZQ",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseurl}}/api/orders/admin/order-list",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"orders",
+								"admin",
+								"order-list"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Healthcheck",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}/healthcheck",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"healthcheck"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzIsImVtYWlsIjoid2llZHkuZGV2QGdtYWlsLmNvbSIsImlhdCI6MTcxNjU2MjUxNSwiZXhwIjoxNzE5MTU0NTE1fQ.HKNbhA-yisxu9KlPipFg28ABnAVKC-blamUgQ36BCUE",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

@@ -38,3 +38,6 @@ Ensure you have the following installed:
    ```bash
    npm run start:prod
    ```
+6. **Use Postman to test the app:**
+
+   Import postman collection and environment from **Postman** directory to your Postman application
