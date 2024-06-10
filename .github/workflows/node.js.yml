@@ -106,7 +106,7 @@ jobs:
           echo "CLOUDINARY_URL=${{ secrets.CLOUDINARY_URL }}" >> .env
           echo "EMAIL_ADDRESS=${{ secrets.EMAIL_ADDRESS }}" >> .env
           echo "EMAIL_PASSWORD=${{ secrets.EMAIL_PASSWORD }}" >> .env
-          echo "HOST_PROD==${{ secrets.HOST_PROD }}" >> .env
+          echo "HOST_PROD=${{ secrets.HOST_PROD }}" >> .env
             
       - name: Upload to VM
         uses: appleboy/scp-action@v0.1.4
