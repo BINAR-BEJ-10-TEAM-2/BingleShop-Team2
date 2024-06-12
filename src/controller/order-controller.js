@@ -25,50 +25,68 @@ const decreaseStock = async (items) => {
 const createOrder = async (req, res, next) => {
   try {
     const { items } = req.body;
-    const isAdmin = req.user.is_admin;
 
-    if (isAdmin === true) {
+    // Check if the items array is empty or null
+    if (!items || items.length === 0) {
+      throw new ResponseError(400, 'NO_ITEMS_IN_ORDER');
+    }
+
+    // Extract the is_admin property from the user object in the request
+    const { is_admin: isAdmin } = req.user;
+
+    // Check if the user is an admin
+    if (isAdmin) {
       throw new ResponseError(400, 'ADMIN_CANT_CREATE_ORDER');
     }
-    // Mengambil itemId
-    const itemIds = items.map((item) => item.id);
-    // Mengambil data Items dari Database
+
+    // Extract the id property from each item and convert it to an integer
+    const itemIds = items.map((item) => parseInt(item.id, 10));
+
+    // Find all the items in the database that match the itemIds
     const itemDB = await Item.findAll({
       where: { id: itemIds },
-      raw: true, // mengambil data dengan format JavaScript biasa
+      raw: true,
       attributes: ['id', 'price', 'stock'],
     });
 
-    // Cek apakah ada item yang tidak ditemukan
-    if (itemDB.length !== items.length) {
-      return res.status(400).json({ message: 'ITEM_NOT_FOUND' });
-    }
-
-    // Cek apakah ada item yang habis
-    const outOfStockItems = itemDB
-      .filter(
-        (item) => item.stock < items.find((i) => i.id === item.id).quantity,
-      )
-      .map((item) => item.id);
-    if (outOfStockItems.length > 0) {
-      return res.status(400).json({
-        message: `ITEM_OUT_OF_STOCK: [${outOfStockItems.join(', ')}]`,
-      });
-    }
-
-    const mergedData = [];
-    itemDB.forEach((itemInDB) => {
-      mergedData.push({
-        ...itemInDB,
-        ...items.find((item) => itemInDB.id === item.id),
-      });
+    // Convert the id property of each item in itemDB to an integer
+    itemDB.forEach((item) => {
+      item.id = parseInt(item.id, 10);
     });
 
-    const totalOrderPrice = mergedData.reduce(
-      (acc, item) => acc + item.price * item.quantity,
-      0,
-    );
+    // Initialize arrays to store missing and out of stock item ids
+    const missingItemIds = [];
+    const outOfStockItemIds = [];
+    let totalOrderPrice = 0;
 
+    // Iterate over each item in the request
+    items.forEach((item) => {
+      // Find the item in itemDB that matches the current item's id
+      const foundItem = itemDB.find((dbItem) => dbItem.id === item.id);
+
+      // If the item is not found in itemDB, add its id to the missingItemIds array
+      if (!foundItem) {
+        missingItemIds.push(item.id);
+      } else if (foundItem.stock < item.quantity) {
+        // If the item's stock is less than the quantity, add its id to the outOfStockItemIds array
+        outOfStockItemIds.push(item.id);
+      } else {
+        // Otherwise, calculate the total order price
+        totalOrderPrice += foundItem.price * item.quantity;
+      }
+    });
+
+    // If there are missing item ids, throw an error
+    if (missingItemIds.length > 0) {
+      throw new ResponseError(400, `ITEM_NOT_FOUND: [${missingItemIds.join(', ')}]`);
+    }
+
+    // If there are out of stock item ids, throw an error
+    if (outOfStockItemIds.length > 0) {
+      throw new ResponseError(400, `ITEM_OUT_OF_STOCK: [${outOfStockItemIds.join(', ')}]`);
+    }
+
+    // Create a new order in the database
     const orderDB = await Order.create({
       user_id: req.user.id,
       address_to: req.body.order.address_to,
@@ -76,14 +94,20 @@ const createOrder = async (req, res, next) => {
       status: 'pending',
     });
 
-    const orderDetails = mergedData.map((item) => ({
+    // Create an array of order details for each item in the request
+    const orderDetails = items.map((item) => ({
       order_id: orderDB.id,
       item_id: item.id,
       quantity: item.quantity,
     }));
 
+    // Decrease the stock of each item in the request
     await decreaseStock(items);
+
+    // Create the order items in the database with the order details array
     const orderItems = await OrderItem.bulkCreate(orderDetails);
+
+    // Create a response data object
     const data = {
       order_id: orderDB.id,
       user_id: orderDB.user_id,
@@ -95,8 +119,11 @@ const createOrder = async (req, res, next) => {
         quantity: item.quantity,
       })),
     };
+
+    // Send a success response with the order data
     return res.status(201).json({ message: 'ORDER_CREATED', data });
   } catch (error) {
+    // Handle errors
     next(error);
   }
 };
@@ -115,7 +142,10 @@ const getUserOrder = async (req, res, next) => {
         },
       ],
     });
-    return res.json({ data: order });
+    return res.json({
+      length: order.length,
+      data: order,
+    });
   } catch (error) {
     // Handle errors
     next(error);
@@ -164,7 +194,10 @@ const getListOrder = async (req, res, next) => {
         },
       ],
     });
-    return res.json({ data: order });
+    return res.json({
+      length: order.length,
+      data: order,
+    });
   } catch (error) {
     // Handle errors
     next(error);
